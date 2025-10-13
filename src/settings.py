@@ -16,4 +16,6 @@ csv_dir_list = [bta_dir + "DynamicShops/", bta_dir + "Community Content/", bta_d
 pilot_dir_list = [bta_dir + "BT Advanced Core/StreamingAssets/data/pilot/", bta_dir + "BT Advanced Pilots/pilot/",
                   bta_dir + "Community Content/pilot/", bta_dir + "BT Advanced Events/pilot/"]
 
+weapon_dir_list = []
+
 api_url = "https://www.bta3062.com/api.php"
