@@ -120,3 +120,12 @@ def get_display_name(item):
                     # Use UIName if available, otherwise use Name because fucking vehicledefs
                     ui_name = data['Description'].get('UIName', data['Description'].get('Name'))
                     return ui_name
+
+def transform_settings_to_descriptions(data: dict) -> dict:
+    descriptions = []
+    for setting in data.get("Settings", []):
+        bonus = setting["Bonus"]
+        # Copy the rest of the keys except "Bonus"
+        entry = {k: v for k, v in setting.items() if k != "Bonus"}
+        descriptions.append({bonus: entry})
+    return {"Descriptions": descriptions}
