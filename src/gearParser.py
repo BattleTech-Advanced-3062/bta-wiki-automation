@@ -12,6 +12,9 @@ def process_weapon_files(directories):
         for root, _, files in os.walk(directory):
             for file in files:
                 if file.startswith("Weapon_") and file.endswith(".json"):
+                    file_path = os.path.join(root, file)
+                    with open(file_path, 'r') as f:
+                        data = json.load(f)
 
 
 if __name__ == "__main__":
