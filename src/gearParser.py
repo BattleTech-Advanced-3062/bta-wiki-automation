@@ -22,6 +22,30 @@ def process_weapon_files(directories):
 def parse_weapon_json(file_path):
     with open(file_path, 'r') as file:
         data = json.load(file)
+        weapon_name = data.get("Description", {}).get("UIName", "unknown")
+        weapon_details = {
+            "name": data.get("Description", {}).get("UIName", "unknown"),
+            "ammo": data.get("AmmoCategory"),
+            "hardpoint": data.get("weaponCategoryID", data.get("Category")),
+            "tonnage": data.get("Tonnage")
+            "slots": data.get("InventorySize"),
+            "damage": data.get("Damage"),
+            "heatdamage": data.get("HeatDamage"),
+            "instability": data.get("Instability"),
+            "shots": data.get("ShotsWhenFired"),
+            "projectiles": data.get("ProjectilesPerShot"),
+            "heat": data.get("HeatGenerated"),
+            "recoil": data.get("RefireModifier"),
+            "accuracy": data.get("AccuracyModifier"),
+            "evasionignored": data.get("EvasivePipsIgnored"),
+            "bonuscritchance": (lambda v: "0" if v == 1 else f"{int((v-1)*100):+d}%")(data.get("CriticalChanceMultiplier", 1)),
+            "rangemin": data.get("MinRange"),
+            "rangeshort": data.get("RangeSplit")[0],
+            "rangemedium": data.get("RangeSplit")[1],
+            "rangelong": data.get("RangeSplit")[2],
+            "rangemax": data.get("MaxRange"),
+            "firesinmelee": "No" if data.get("MinRange", 0) != 0 or data.get("AOECapable") else "Yes"
+            "additionalinfo": data.get("Custom", {}).get("BonusDescriptions")
 
 if __name__ == "__main__":
     result = process_weapon_files(weapon_dir_list)
