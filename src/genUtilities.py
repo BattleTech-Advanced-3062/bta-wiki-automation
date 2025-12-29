@@ -121,7 +121,10 @@ def get_display_name(item):
                     ui_name = data['Description'].get('UIName', data['Description'].get('Name'))
                     return ui_name
 
-def transform_settings_to_descriptions(data: dict) -> dict:
+def transform_settings_to_descriptions(path: str) -> dict:
+    with open(path, "r") as f:
+        data = json.load(f)
+
     descriptions = []
     for setting in data.get("Settings", []):
         bonus = setting["Bonus"]
@@ -129,3 +132,37 @@ def transform_settings_to_descriptions(data: dict) -> dict:
         entry = {k: v for k, v in setting.items() if k != "Bonus"}
         descriptions.append({bonus: entry})
     return {"Descriptions": descriptions}
+
+def map_bonus_descriptions(descriptions, bonus_list):
+    # Build lookup: "NPCDEBUFF" -> {"Short": "...", "Long": "...", "Full": "..."}
+    lookup = {}
+    for item in descriptions.get("Descriptions", []):
+        for key, value in item.items():
+            lookup[key] = value
+
+    result = []
+
+    for entry in bonus_list:
+        key, *rest = entry.split(":", 1)
+        key = key.strip()
+
+        # Values after colon, split on commas
+        values = []
+        if rest:
+            values = [v.strip() for v in rest[0].split(",") if v.strip()]
+
+        desc = lookup.get(key)
+        if not desc:
+            result.append(entry)   # fallback — no matching description
+            continue
+
+        # Plug values into the Full template
+        try:
+            text = desc["Full"].format(*values)
+        except Exception:
+            text = desc["Full"]   # fallback if formatting fails
+
+        result.append(text)
+
+    return result
+
