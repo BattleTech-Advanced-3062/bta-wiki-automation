@@ -15,7 +15,10 @@ def process_weapon_files(directories):
                     file_path = os.path.join(root, file)
                     with open(file_path, 'r') as f:
                         data = json.load(f)
-                        if "BLACKLISTED" not in data.get("ComponentTags", {}).get("items", []) or "Modes" not in data:
+                        if not (
+                            "BLACKLISTED" in data.get("ComponentTags", {}).get("items", [])
+                            or "Modes" in data
+                        ):
                             weapon_entry = parse_weapon_json(file_path)
                             weapon_dict.update(weapon_entry)
     return weapon_dict

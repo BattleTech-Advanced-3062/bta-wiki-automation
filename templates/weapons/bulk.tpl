@@ -33,27 +33,29 @@
 !<small>Fires In Melee</small>
 !<small>Additional Info</small>
 |-
-|{{name}}
-|{{ammo}}
-|{{hardpoint}}
-|{{tonnage}}
-|{{slots}}
-|{{damage}}
-|{{heatdamage}}
-|{{instability}}
-|{{shots}}
-|{{projectiles}}
-|{{heat}}
-|{{recoil}}
-|{{accuracy}}
-|{{evasionignored}}
-|{{bonuscritchance}}
-|{{rangemin}}
-|{{rangeshort}}
-|{{rangemedium}}
-|{{rangelong}}
-|{{rangemax}}
-|{{firesinmelee}}
-|{{additionalinfo}}
+{%- for weapon in weapons %}
+|{{weapon.name}}
+|{{weapon.ammo}}
+|{{weapon.hardpoint}}
+|{{weapon.tonnage}}
+|{{weapon.slots}}
+|{{weapon.damage}}
+|{{weapon.heatdamage}}
+|{{weapon.instability}}
+|{{weapon.shots}}
+|{{weapon.projectiles}}
+|{{weapon.heat}}
+|{{weapon.recoil}}
+|{{weapon.accuracy}}
+|{{weapon.evasionignored}}
+|{{weapon.bonuscritchance}}
+|{{weapon.rangemin}}
+|{{weapon.rangeshort}}
+|{{weapon.rangemedium}}
+|{{weapon.rangelong}}
+|{{weapon.rangemax}}
+|{{weapon.firesinmelee}}
+|{{weapon.additionalinfo}}
 |-
-|}
+{%- endfor %}
+|}ß

@@ -158,11 +158,14 @@ def map_bonus_descriptions(descriptions, bonus_list):
 
         # Plug values into the Full template
         try:
-            text = desc["Full"].format(*values)
+            text = desc["Long"].format(*values)
         except Exception:
-            text = desc["Full"]   # fallback if formatting fails
+            text = desc["Long"]   # fallback if formatting fails
 
         result.append(text)
 
-    return result
+    return "</br>".join(result)
+
+def clean_vehicle_pathing(value):
+    return value.rsplit("_", 1)[-1].capitalize() if value else ""
 
