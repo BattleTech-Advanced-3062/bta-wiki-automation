@@ -169,3 +169,25 @@ def map_bonus_descriptions(descriptions, bonus_list):
 def clean_vehicle_pathing(value):
     return value.rsplit("_", 1)[-1].capitalize() if value else ""
 
+def extract_weapon_category(data: dict) -> str | None:
+    category = data.get("Custom", {}).get("Category")
+
+    if isinstance(category, dict):
+        cat_ids = [category.get("CategoryID", "")]
+    elif isinstance(category, list):
+        cat_ids = [
+            entry.get("CategoryID", "")
+            for entry in category
+            if isinstance(entry, dict)
+        ]
+    else:
+        return None
+
+    for cat_id in cat_ids:
+        if cat_id.startswith("w/"):
+            return cat_id.split("/")[-1]
+        elif cat_id is None:
+            cat_id = "uncategorized"
+            return cat_id
+
+    return None

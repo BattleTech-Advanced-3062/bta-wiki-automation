@@ -1,3 +1,4 @@
+<div class="noresize">
 {| class="wikitable"
 !
 !
@@ -57,3 +58,4 @@
 |{{additionalinfo}}
 |-
 |}
+</div>
