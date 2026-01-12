@@ -17,7 +17,7 @@ def process_weapon_files(directories):
                         data = json.load(f)
                         if not (
                             "BLACKLISTED" in data.get("ComponentTags", {}).get("items", [])
-                            or "Modes" in data
+                            #or "Modes" in data
                         ):
                             weapon_entry = parse_weapon_json(file_path)
                             weapon_dict.update(weapon_entry)
@@ -80,6 +80,7 @@ if __name__ == "__main__":
     processed_list = process_weapon_files(weapon_directories)
     result = group_by_category(processed_list)
     pp(result)
+    #pp(processed_list)
     #print("\n".join(c if c is not None else "uncategorized" for c in result))
     #print("\n".join((c if c is not None else "uncategorized").capitalize() for c in result))
 
