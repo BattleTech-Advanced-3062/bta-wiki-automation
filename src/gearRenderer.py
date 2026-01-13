@@ -6,7 +6,7 @@ import genUtilities
 import gearParser
 from settings import *
 
-template = environment.get_template("weapons/default.tpl")
+template = environment.get_template("weapons/newbulk.tpl")
 #session, csrf_token = genUtilities.create_wiki_session()
 
 def render_weapon_entry(weapon):
@@ -51,9 +51,18 @@ def render_weapon_entry(weapon):
         with open(results_filename, mode="w", encoding="utf-8") as results:
             results.write(template.render(context))
 
+def render_bulk_entry(categories):
+    bulk_filename = "bulk_weapons.wiki"
+    context = {
+    "categories": categories
+    }
+    with open(bulk_filename, mode="w", encoding="utf-8") as weapons:
+            weapons.write(template.render(context))
+
 if __name__ == "__main__":
-    results = gearParser.process_weapon_files(bta_dir + "BT Advanced Gear")
-    
-    #pp(results)
-    for weapon in results.items():
-        render_weapon_entry(weapon)
+    results = gearParser.process_weapon_files(weapon_dir_list)
+    categories = gearParser.group_by_category(results)
+    render_bulk_entry(categories)
+    #pp(categories)
+    #for weapon in results.items():
+        #render_weapon_entry(weapon)

@@ -6,6 +6,11 @@ import genUtilities
 from collections import defaultdict
 from settings import *
 
+bonuses = genUtilities.transform_settings_to_details(bta_dir + "BT Advanced Core/settings/bonusDescriptions/BonusDescriptions_MechEngineer.json", 
+                                                                   "Settings", "Bonus")
+categories = genUtilities.transform_settings_to_details(bta_dir + "BT Advanced Core/settings/categories/Categories_Weapons.json",
+                                                                      "Settings", "Name")
+
 def process_weapon_files(directories):
     weapon_dict = {}
     for directory in directories:
@@ -17,14 +22,13 @@ def process_weapon_files(directories):
                         data = json.load(f)
                         if not (
                             "BLACKLISTED" in data.get("ComponentTags", {}).get("items", [])
-                            #or "Modes" in data
+                            or "Modes" in data
                         ):
-                            weapon_entry = parse_weapon_json(file_path)
+                            weapon_entry = parse_weapon_json(file_path, bonuses, categories)
                             weapon_dict.update(weapon_entry)
     return weapon_dict
                     
-def parse_weapon_json(file_path):
-    descriptions = genUtilities.transform_settings_to_descriptions(bta_dir + "BT Advanced Core/settings/bonusDescriptions/BonusDescriptions_MechEngineer.json")
+def parse_weapon_json(file_path, bonuses, categories):
     with open(file_path, 'r') as file:
         #print("attempting: ", file_path)
         data = json.load(file)
@@ -32,8 +36,8 @@ def parse_weapon_json(file_path):
         weapon_details = {
             "filepath": os.path.basename(file_path),
             "name": data.get("Description", {}).get("UIName", "unknown"),
-            "category": genUtilities.extract_weapon_category(data) or data.get("weaponCategoryID"),
-            "ammo": data.get("AmmoCategory"),
+            "category": genUtilities.map_categories(categories, data.get("Custom", {}).get("Category"), "DisplayName"),# or data.get("weaponCategoryID"),
+            "ammo": "None" if data.get("AmmoCategory") == "NotSet" else data.get("AmmoCategory"),
             "hardpoint": data.get("weaponCategoryID", data.get("Category")),
             "tonnage": data.get("Tonnage"),
             "slots": data.get("InventorySize"),
@@ -44,16 +48,16 @@ def parse_weapon_json(file_path):
             "projectiles": data.get("ProjectilesPerShot"),
             "heat": data.get("HeatGenerated"),
             "recoil": data.get("RefireModifier"),
-            "accuracy": data.get("AccuracyModifier"),
+            "accuracy": f" {data.get('AccuracyModifier')}",
             "evasionignored": data.get("EvasivePipsIgnored"),
-            "bonuscritchance": (lambda v: "0" if v == 1 else f"{int((v-1)*100):+d}%")(data.get("CriticalChanceMultiplier", 1)),
+            "bonuscritchance": f" {genUtilities.format_crit_chance(data.get('CriticalChanceMultiplier', 1))}",
             "rangemin": data.get("MinRange"),
             "rangeshort": (data.get("RangeSplit") or [0, 0, 0])[0],
             "rangemedium": (data.get("RangeSplit") or [0, 0, 0])[1],
             "rangelong": (data.get("RangeSplit") or [0, 0, 0])[2],
             "rangemax": data.get("MaxRange"),
             "firesinmelee": "No" if data.get("MinRange", 0) != 0 or data.get("AOECapable") else "Yes",
-            "additionalinfo": genUtilities.map_bonus_descriptions(descriptions, data.get("Custom", {}).get("BonusDescriptions", []))
+            "additionalinfo": f" {genUtilities.map_details(bonuses, data.get('Custom', {}).get('BonusDescriptions', []), 'Full')}"
         }
     # print(weapon_details)
     return {weapon_name: weapon_details}
@@ -79,7 +83,8 @@ if __name__ == "__main__":
     weapon_directories = weapon_dir_list
     processed_list = process_weapon_files(weapon_directories)
     result = group_by_category(processed_list)
-    pp(result)
+    print(result)
+    #pp(result)
     #pp(processed_list)
     #print("\n".join(c if c is not None else "uncategorized" for c in result))
     #print("\n".join((c if c is not None else "uncategorized").capitalize() for c in result))

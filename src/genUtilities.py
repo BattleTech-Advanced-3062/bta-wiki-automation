@@ -2,6 +2,9 @@ import os
 import requests
 import json
 from settings import *
+import re
+from pprint import pp
+
 
 def create_wiki_session():
 
@@ -121,27 +124,31 @@ def get_display_name(item):
                     ui_name = data['Description'].get('UIName', data['Description'].get('Name'))
                     return ui_name
 
-def transform_settings_to_descriptions(path: str) -> dict:
+def transform_settings_to_details(path: str, top_level, id) -> dict:
     with open(path, "r") as f:
         data = json.load(f)
 
     descriptions = []
-    for setting in data.get("Settings", []):
-        bonus = setting["Bonus"]
+    for setting in data.get(top_level, []):
+        bonus = setting[id]
         # Copy the rest of the keys except "Bonus"
-        entry = {k: v for k, v in setting.items() if k != "Bonus"}
+        entry = {k: v for k, v in setting.items() if k != id}
         descriptions.append({bonus: entry})
-    return {"Descriptions": descriptions}
 
-def map_bonus_descriptions(descriptions, bonus_list):
+    #print("Details", descriptions)
+
+    return {"Details": descriptions}
+
+def map_details(descriptions, bonus_list, id):
     # Build lookup: "NPCDEBUFF" -> {"Short": "...", "Long": "...", "Full": "..."}
     lookup = {}
-    for item in descriptions.get("Descriptions", []):
+    for item in descriptions.get("Details", []):
         for key, value in item.items():
             lookup[key] = value
 
     result = []
 
+    #print(bonus_list)
     for entry in bonus_list:
         key, *rest = entry.split(":", 1)
         key = key.strip()
@@ -158,13 +165,60 @@ def map_bonus_descriptions(descriptions, bonus_list):
 
         # Plug values into the Full template
         try:
-            text = desc["Long"].format(*values)
+            text = desc[id].format(*values)
         except Exception:
-            text = desc["Long"]   # fallback if formatting fails
+            text = desc[id]   # fallback if formatting fails
 
         result.append(text)
 
     return "</br>".join(result)
+
+def map_categories(details: dict, category_list: list | None, id: str):
+    if not category_list:
+        return None
+    #WEAPON_ID_PATTERN = re.compile(r"^w(/[^/]+){3,}$")
+    WEAPON_ID_PATTERN = re.compile(r"^.(/.+){3,}$")
+
+    print(category_list)
+    # Normalize category_list to always be a flat list of dicts
+    if isinstance(category_list, dict):
+        category_entries = [category_list]
+    elif isinstance(category_list, list):
+        category_entries = []
+        for entry in category_list:
+            if isinstance(entry, dict):
+                category_entries.append(entry)
+            elif isinstance(entry, list):
+                # flatten nested lists
+                for e in entry:
+                    if isinstance(e, dict):
+                        category_entries.append(e)
+    else:
+        # unknown type
+        return None
+
+    #print(category_entries)
+    #pp(details)
+    # Build lookup: "w/x/y/z" -> detail dict
+    #print(category_list)
+    lookup = {}
+    for item in details.get("Details", []):
+        if isinstance(item, dict):
+            for key, value in item.items():
+                lookup[key] = value
+
+    # Find first CategoryID that matches weapon pattern and return the requested field
+    for entry in category_entries:
+        cid = entry.get("CategoryID")
+        if cid and WEAPON_ID_PATTERN.match(cid):
+            detail = lookup.get(cid)
+            if detail:
+                return detail.get(id)
+
+    return None
+
+def format_crit_chance(multiplier: float) -> str:
+    return "0" if multiplier == 1 else f"{int((multiplier - 1) * 100):+d}%"
 
 def clean_vehicle_pathing(value):
     return value.rsplit("_", 1)[-1].capitalize() if value else ""
@@ -189,5 +243,7 @@ def extract_weapon_category(data: dict) -> str | None:
         elif cat_id is None:
             cat_id = "uncategorized"
             return cat_id
+
+#def lookup_weapon_category
 
     return None
