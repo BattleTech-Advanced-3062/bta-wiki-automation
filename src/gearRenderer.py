@@ -6,7 +6,7 @@ import genUtilities
 import gearParser
 from settings import *
 
-template = environment.get_template("weapons/newbulk.tpl")
+template = environment.get_template("weapons/modal.tpl")
 #session, csrf_token = genUtilities.create_wiki_session()
 
 def render_weapon_entry(weapon):
@@ -37,7 +37,8 @@ def render_weapon_entry(weapon):
         "rangelong": weapon_info.get("rangelong"),
         "rangemax": weapon_info.get("rangemax"),
         "firesinmelee": weapon_info.get("firesinmelee"),
-        "additionalinfo": weapon_info.get("additionalinfo"), 
+        "additionalinfo": weapon_info.get("additionalinfo"),
+        "modes": weapon_info.get
     }
 
     if "GITHUB_ACTIONS" in os.environ or "LOCAL_OVERRIDE" in os.environ:
@@ -56,13 +57,15 @@ def render_bulk_entry(categories):
     context = {
     "categories": categories
     }
+    #pp(context)
     with open(bulk_filename, mode="w", encoding="utf-8") as weapons:
-            weapons.write(template.render(context))
+            weapons.write(template.render(**context))
 
 if __name__ == "__main__":
     results = gearParser.process_weapon_files(weapon_dir_list)
-    categories = gearParser.group_by_category(results)
-    render_bulk_entry(categories)
+    grouped = gearParser.group_by_category(results)
+    split = gearParser.split_modes(grouped)
+    render_bulk_entry(split)
     #pp(categories)
     #for weapon in results.items():
         #render_weapon_entry(weapon)

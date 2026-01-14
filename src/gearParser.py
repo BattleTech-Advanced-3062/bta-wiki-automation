@@ -22,7 +22,7 @@ def process_weapon_files(directories):
                         data = json.load(f)
                         if not (
                             "BLACKLISTED" in data.get("ComponentTags", {}).get("items", [])
-                            or "Modes" in data
+                            #or "Modes" in data
                         ):
                             weapon_entry = parse_weapon_json(file_path, bonuses, categories)
                             weapon_dict.update(weapon_entry)
@@ -34,7 +34,7 @@ def parse_weapon_json(file_path, bonuses, categories):
         data = json.load(file)
         weapon_name = data.get("Description", {}).get("UIName", "unknown")
         weapon_details = {
-            "filepath": os.path.basename(file_path),
+            "filepath": os.path.splitext(os.path.basename(file_path))[0],
             "name": data.get("Description", {}).get("UIName", "unknown"),
             "category": genUtilities.map_categories(categories, data.get("Custom", {}).get("Category"), "DisplayName"),# or data.get("weaponCategoryID"),
             "ammo": "None" if data.get("AmmoCategory") == "NotSet" else data.get("AmmoCategory"),
@@ -57,7 +57,8 @@ def parse_weapon_json(file_path, bonuses, categories):
             "rangelong": (data.get("RangeSplit") or [0, 0, 0])[2],
             "rangemax": data.get("MaxRange"),
             "firesinmelee": "No" if data.get("MinRange", 0) != 0 or data.get("AOECapable") else "Yes",
-            "additionalinfo": f" {genUtilities.map_details(bonuses, data.get('Custom', {}).get('BonusDescriptions', []), 'Full')}"
+            "additionalinfo": f" {genUtilities.map_details(bonuses, data.get('Custom', {}).get('BonusDescriptions', []), 'Full')}",
+            "modes": genUtilities.normalize_modes(data.get("Modes"))
         }
     # print(weapon_details)
     return {weapon_name: weapon_details}
@@ -71,6 +72,29 @@ def group_by_category(data: dict) -> dict:
 
     return dict(grouped)
 
+from collections import defaultdict
+
+def split_modes(grouped: dict) -> dict:
+    result = {}
+
+    for category, weapons in grouped.items():
+        non_modes = {}
+        modes = {}
+
+        for name, attrs in weapons.items():
+            if attrs.get("modes"):
+                modes[name] = attrs
+            else:
+                non_modes[name] = attrs
+
+        result[category] = {
+            "non_modes": non_modes,
+            "modes": modes,
+        }
+
+    return result
+
+
 def print_categories(grouped: dict, label: str = "uncategorized") -> None:
     for category, items in grouped.items():
         if category == label:
@@ -82,8 +106,9 @@ if __name__ == "__main__":
     #print(weapon_dir_list)
     weapon_directories = weapon_dir_list
     processed_list = process_weapon_files(weapon_directories)
-    result = group_by_category(processed_list)
-    print(result)
+    grouped = group_by_category(processed_list)
+    result = split_modes(grouped)
+    pp(result)
     #pp(result)
     #pp(processed_list)
     #print("\n".join(c if c is not None else "uncategorized" for c in result))

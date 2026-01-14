@@ -179,7 +179,7 @@ def map_categories(details: dict, category_list: list | None, id: str):
     #WEAPON_ID_PATTERN = re.compile(r"^w(/[^/]+){3,}$")
     WEAPON_ID_PATTERN = re.compile(r"^.(/.+){3,}$")
 
-    print(category_list)
+    #print(category_list)
     # Normalize category_list to always be a flat list of dicts
     if isinstance(category_list, dict):
         category_entries = [category_list]
@@ -244,6 +244,25 @@ def extract_weapon_category(data: dict) -> str | None:
             cat_id = "uncategorized"
             return cat_id
 
-#def lookup_weapon_category
-
     return None
+
+def normalize_modes(modes):
+    if not modes:
+        return None
+
+    def transform(mode):
+        out = {}
+        for k, v in mode.items():
+            if k == "UIName":
+                continue
+            if k == "CriticalChanceMultiplier":
+                out[k] = format_crit_chance(v)
+            else:
+                out[k] = v
+        return out
+
+    return {
+        mode.get("UIName"): transform(mode)
+        for mode in modes
+        if isinstance(mode, dict) and mode.get("UIName")
+    }
