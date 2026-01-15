@@ -175,11 +175,10 @@ def map_details(descriptions, bonus_list, id):
 
 def map_categories(details: dict, category_list: list | None, id: str):
     if not category_list:
-        return None
-    #WEAPON_ID_PATTERN = re.compile(r"^w(/[^/]+){3,}$")
+        return "AMID SAYS GIVE THESE A CATEGORY"
+
     WEAPON_ID_PATTERN = re.compile(r"^.(/.+){3,}$")
 
-    #print(category_list)
     # Normalize category_list to always be a flat list of dicts
     if isinstance(category_list, dict):
         category_entries = [category_list]
@@ -195,12 +194,9 @@ def map_categories(details: dict, category_list: list | None, id: str):
                         category_entries.append(e)
     else:
         # unknown type
-        return None
+        return "AMID SAYS GIVE THESE A CATEGORY"
 
-    #print(category_entries)
-    #pp(details)
     # Build lookup: "w/x/y/z" -> detail dict
-    #print(category_list)
     lookup = {}
     for item in details.get("Details", []):
         if isinstance(item, dict):
@@ -212,13 +208,14 @@ def map_categories(details: dict, category_list: list | None, id: str):
         cid = entry.get("CategoryID")
         if cid and WEAPON_ID_PATTERN.match(cid):
             detail = lookup.get(cid)
-            if detail:
-                return detail.get(id)
+            if detail and id in detail:
+                return detail[id]
 
-    return None
+    # ✅ Explicit fallback
+    return "AMID SAYS GIVE THESE A CATEGORY"
 
-def format_crit_chance(multiplier: float) -> str:
-    return "0" if multiplier == 1 else f"{int((multiplier - 1) * 100):+d}%"
+def format_crit_chance(multiplier: float) -> int:
+    return 0 if multiplier == 1 else int((multiplier - 1) * 100)
 
 def clean_vehicle_pathing(value):
     return value.rsplit("_", 1)[-1].capitalize() if value else ""
