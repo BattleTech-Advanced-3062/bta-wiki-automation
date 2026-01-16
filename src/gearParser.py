@@ -13,20 +13,29 @@ categories = genUtilities.transform_settings_to_details(bta_dir + "BT Advanced C
 
 def process_weapon_files(directories):
     weapon_dict = {}
+    excluded_files = {"Weapon_DFAAttack.json", "Weapon_MeleeAttack.json", "Weapon_MeleeAttackEx.json", "Weapon_Laser_AI_Imaginary.json"}
+
     for directory in directories:
         for root, _, files in os.walk(directory):
             for file in files:
-                if file.startswith("Weapon_") and file.endswith(".json"):
+                if (
+                    file.startswith("Weapon_")
+                    and file.endswith(".json")
+                    and file not in excluded_files
+                ):
                     file_path = os.path.join(root, file)
-                    with open(file_path, 'r') as f:
+
+                    with open(file_path, "r") as f:
                         data = json.load(f)
-                        if not (
-                            "BLACKLISTED" in data.get("ComponentTags", {}).get("items", [])
-                            or "Weapon_DFAAttack" in data
-                            #or "Modes" in data
-                        ):
-                            weapon_entry = parse_weapon_json(file_path, bonuses, categories)
-                            weapon_dict.update(weapon_entry)
+
+                        if "BLACKLISTED" in data.get("ComponentTags", {}).get("items", []) or "DEPRECATED" in json.dumps(data):
+                            continue
+
+                        weapon_entry = parse_weapon_json(
+                            file_path, bonuses, categories
+                        )
+                        weapon_dict.update(weapon_entry)
+
     return weapon_dict
                     
 def parse_weapon_json(file_path, bonuses, categories):
@@ -69,11 +78,15 @@ def group_by_category(data: dict) -> dict:
 
     for name, attrs in data.items():
         category = attrs.get("category")
+
+        if isinstance(category, str):
+            category = category.replace("Small ", "")
+
         grouped[category][name] = attrs
 
-    grouped = dict(sorted(grouped.items()))
-    return dict(grouped)
+    return dict(sorted(grouped.items()))
 
+'''
 def split_modes(grouped: dict) -> dict:
     result = {}
 
@@ -93,7 +106,33 @@ def split_modes(grouped: dict) -> dict:
         }
 
     return result
+'''
+def split_modes(grouped: dict) -> dict:
+    result = {}
 
+    for category, weapons in grouped.items():
+        non_modes = {}
+        modes = defaultdict(dict)
+
+        for name, attrs in weapons.items():
+            weapon_modes = attrs.get("modes")
+
+            if not weapon_modes:
+                non_modes[name] = attrs
+                continue
+
+            for mode_name, mode_data in weapon_modes.items():
+                modes[mode_name][name] = {
+                    **attrs,
+                    "active_mode": mode_data
+                }
+
+        result[category] = {
+            "non_modes": non_modes,
+            "modes": dict(sorted(modes.items())),
+        }
+
+    return result
 
 def print_categories(grouped: dict, label: str = "uncategorized") -> None:
     for category, items in grouped.items():
@@ -135,8 +174,11 @@ if __name__ == "__main__":
     grouped = group_by_category(processed_list)
     result = split_modes(grouped)
     modes = get_modes(weapon_directories)
+    pp(grouped)
+    #cats = print_categories(grouped)
+    #print(cats)
     #pp(modes)
-    pp(result)
+    #pp(result)
     #pp(processed_list)
     #print("\n".join(c if c is not None else "uncategorized" for c in result))
     #print("\n".join((c if c is not None else "uncategorized").capitalize() for c in result))

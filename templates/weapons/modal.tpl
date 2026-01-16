@@ -1,5 +1,6 @@
 {%- for category, groups in categories.items() %}
 == {{ category }} ==
+
 {#- ---------------- NON-MODE WEAPONS (single table) ---------------- #}
 {%- if groups["non_modes"] %}
 <div class="noresize">
@@ -66,11 +67,13 @@
 |}
 </div>
 {%- endif %}
-{#- ---------------- MODE WEAPONS (tabs per weapon, table per mode) ---------------- #}
-{%- for weapon in groups["modes"].values() %}
+{#- ---------------- MODE WEAPONS (tabs per mode, rows per weapon) ---------------- #}
+{%- if groups["modes"] %}
+
 <tabs>
-{%- for mode_name, mode in weapon.modes.items() %}
+{%- for mode_name, weapons in groups["modes"].items() %}
 <tab name="{{ mode_name }}">
+
 {| class="wikitable"
 !
 !
@@ -105,8 +108,11 @@
 !<small>Max</small>
 !<small>Fires In Melee</small>
 !<small>Additional Info</small>
+
+{%- for weapon in weapons.values() %}
+{%- set mode = weapon.active_mode %}
 |-
-| {{ weapon.name }}
+| {{ weapon.name }} ({{ mode_name }})
 | {{ weapon.ammo }}
 | {{ weapon.hardpoint }}
 | {{ weapon.tonnage }}
@@ -128,32 +134,14 @@
 | {{ weapon.rangemax + (mode.MaxRange | default(0)) | int }}
 | {{ weapon.firesinmelee }}
 | <div style="max-height: 100px; overflow-y: scroll;">{{ weapon.additionalinfo }}</div>
+{%- endfor %}
 |}
+
 </tab>
 {%- endfor %}
 </tabs>
-</div>
-</div>
-{%- endfor %}
 
-<div class="toccolours mw-collapsible">
-<div style="font-weight:bold;line-height:1.6;">'''Found On These 'Mechs: (Click Expand For List)'''</div>
-<div class="mw-collapsible-content">
-{%- for weapon in groups["modes"].values() %}
-<div class="toccolours mw-collapsible mw-collapsed">
-<div style="font-weight:bold;line-height:1.6;">{{ weapon.name }}</div>
-<div class="mw-collapsible-content">
-Gear ID: ''{{weapon.filepath}}''
-{% raw %}{{{% endraw %}EquipmentMechs|{{weapon.filepath}}{% raw %}}}{% endraw %}
-</div></div>
-{%- endfor %}
-{%- for weapon in groups["non_modes"].values() %}
-<div class="toccolours mw-collapsible mw-collapsed">
-<div style="font-weight:bold;line-height:1.6;">{{ weapon.name }}</div>
-<div class="mw-collapsible-content">
-Gear ID: ''{{weapon.filepath}}''
-{% raw %}{{{% endraw %}EquipmentMechs|{{weapon.filepath}}{% raw %}}}{% endraw %}
-</div></div>
-{%- endfor %}
-</div></div>
+{%- endif %}
+
+
 {%- endfor %}
