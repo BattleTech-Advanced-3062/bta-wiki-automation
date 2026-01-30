@@ -1,3 +1,11 @@
+'''How to read these tables:''' values in the Damage columns (damage/heat/stability) are multiplied by the number of shots and divided by the number of projectiles. 
+
+For example: an AC/2 does 9 damage and 7 stability per shot and fires 3 shots for a total of 27 damage and 21 stability. A Light Cannon does 90 damage and 3 stability per shot and fires only 1 shot, however it is divided amongst 15 projectiles so it does 15 separate instances of 6 damage and 0.2 stability spread over the target in a shotgun effect. 
+
+A slightly more complex example is a HAG20 which does 50 damage per shot multiplied by 2 shots for a total of 100 damage but each shot is divided into 10 projectiles for a total of 20 "pellets" hitting at 5 damage per projectile.
+
+'''Note:''' Accuracy bonuses/penalties are displayed as they're seen in tool-tips and orange text within the game i.e. a +1 increases your chance to hit and a -1 decreases it. This might cause some confusion with anyone used to table-top rules where -1 is good and +1 is bad.
+
 {%- for category, groups in categories.items() %}
 == {{ category }} ==
 

@@ -29,7 +29,7 @@ def render_bulk_entry(categories):
     if "GITHUB_ACTIONS" in os.environ or "LOCAL_OVERRIDE" in os.environ:
         # Wiki page writing
         print("Posting to the wiki")
-        page_title = "Test Weapons Page"
+        page_title = "Weapons"
         genUtilities.post_to_wiki(session, csrf_token, page_title, template.render(**context))
     else:
         # Local file writing
