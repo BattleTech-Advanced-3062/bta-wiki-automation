@@ -143,17 +143,39 @@
 
 {%- endif %}
 
+{%- if groups["modes"] %}
 <div class="toccolours mw-collapsible">
-<div style="font-weight:bold;line-height:1.6;">'''Found On These 'Mechs: (Click Expand For List)'''</div>
+<div style="font-weight:bold;line-height:1.6;">
+'''Found On These 'Mechs: (Click Expand For List)'''
+</div>
 <div class="mw-collapsible-content">
-{%- for weapon in groups["modes"].values() %}
+
+{%- set seen = {} %}
+
+{%- for mode_name, weapons in groups["modes"].items() %}
+  {%- for weapon in weapons.values() %}
+    {%- if weapon.filepath not in seen %}
+      {%- set _ = seen.update({weapon.filepath: True}) %}
+
 <div class="toccolours mw-collapsible mw-collapsed">
-<div style="font-weight:bold;line-height:1.6;">{{ weapon.name }}</div>
+<div style="font-weight:bold;line-height:1.6;">
+{{ weapon.name }}
+</div>
 <div class="mw-collapsible-content">
-Gear ID: ''{{weapon.filepath}}''
-{% raw %}{{{% endraw %}EquipmentMechs|{{weapon.filepath}}{% raw %}}}{% endraw %}
-</div></div>
+Gear ID: ''{{ weapon.filepath }}''
+{% raw %}{{{% endraw %}EquipmentMechs|{{ weapon.filepath }}{% raw %}}}{% endraw %}
+</div>
+</div>
+
+    {%- endif %}
+  {%- endfor %}
 {%- endfor %}
+
+</div>
+</div>
+{%- endif %}
+
+{%- if groups["non_modes"] %}
 {%- for weapon in groups["non_modes"].values() %}
 <div class="toccolours mw-collapsible mw-collapsed">
 <div style="font-weight:bold;line-height:1.6;">{{ weapon.name }}</div>
@@ -163,4 +185,5 @@ Gear ID: ''{{weapon.filepath}}''
 </div></div>
 {%- endfor %}
 </div></div>
+{%- endif %}
 {%- endfor %}

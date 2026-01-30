@@ -324,7 +324,7 @@ if __name__ == "__main__":
     grouped = group_by_category(processed_list)
     result = split_modes(grouped)
     modes = get_modes(weapon_directories)
-    pp(result)
+    #pp(grouped)
     #cats = print_categories(grouped)
     #print(cats)
     #pp(modes)
