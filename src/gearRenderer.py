@@ -66,6 +66,6 @@ if __name__ == "__main__":
     grouped = gearParser.group_by_category(results)
     split = gearParser.split_modes(grouped)
     render_bulk_entry(split)
-    #pp(categories)
+    pp(split)
     #for weapon in results.items():
         #render_weapon_entry(weapon)

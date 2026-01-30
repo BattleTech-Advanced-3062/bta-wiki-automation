@@ -5,6 +5,9 @@ from pprint import pp
 import genUtilities
 from collections import defaultdict
 from settings import *
+import math
+import re
+import copy
 
 bonuses = genUtilities.transform_settings_to_details(bta_dir + "BT Advanced Core/settings/bonusDescriptions/BonusDescriptions_MechEngineer.json", 
                                                                    "Settings", "Bonus")
@@ -34,10 +37,159 @@ def process_weapon_files(directories):
                         weapon_entry = parse_weapon_json(
                             file_path, bonuses, categories
                         )
+
+                        weapon_entry = expand_coil_modes(weapon_entry)
+                        #weapon_entry = sort_coil_modes(weapon_entry)
+
                         weapon_dict.update(weapon_entry)
 
     return weapon_dict
-                    
+
+
+def sort_coil_modes(entry: dict) -> dict:
+    """
+    Accepts a single-entry dict:
+    { "<weapon_key>": { weapon_data } }
+
+    Sorts weapon["modes"] numerically by pip count.
+    Returns the entry.
+    """
+
+    weapon = next(iter(entry.values()))
+    if weapon.get("name") != "COIL":
+        return entry
+
+    modes = weapon.get("modes")
+
+    if not isinstance(modes, dict):
+        return entry
+
+    def sort_key(item):
+        key, mode = item
+
+        # Off (or anything without pips) comes first
+        if "Id" not in mode:
+            return (0, 0)
+
+        m = re.search(r"(On|Over):\s*(\d+)\s*Pips", mode["Id"])
+        if not m:
+            return (0, 0)
+
+        mode_type, pips = m.groups()
+
+        # Order: Off -> On -> Over
+        type_order = {"On": 1, "Over": 2}
+
+        return (type_order.get(mode_type, 0), int(pips))
+
+    weapon["modes"] = dict(sorted(modes.items(), key=sort_key))
+
+    return entry
+
+def expand_coil_modes(entry: dict) -> dict:
+    """
+    Accepts a single-entry dict:
+    { "<weapon_key>": { weapon_data } }
+
+    If weapon is COIL, returns TWO entries:
+      - "COIL - On"
+      - "COIL - Over"
+
+    Otherwise, returns the entry unchanged.
+    """
+
+    # Single-entry dict by contract
+    weapon_key, weapon = next(iter(entry.items()))
+
+    if weapon.get("name") != "COIL":
+        return entry
+
+    base_damage = weapon.get("damage", 30)
+    base_heat = weapon.get("heat", 30)
+
+    results = {}
+
+    # -------- ON VARIANT --------
+    on_weapon = copy.deepcopy(weapon)
+    on_weapon["name"] = "COIL - On"
+    on_weapon["modes"] = {}
+
+    for n in range(1, 13):
+        on_weapon["modes"][n] = {
+            "Id": n,
+            "isBaseMode": False,
+            "DamagePerShot": round((base_damage * (n ** 0.75)) - base_damage, 2),
+            "HeatGenerated": round((base_heat * (n ** 0.80)) - base_heat, 2),
+        }™
+
+    results["COIL - On"] = on_weapon
+
+    # -------- OVER VARIANT --------
+    over_weapon = copy.deepcopy(weapon)
+    over_weapon["name"] = "COIL - Over"
+    over_weapon["modes"] = {}
+
+    for n in range(1, 13):
+        over_weapon["modes"][n] = {
+            "Id": n,
+            "isBaseMode": False,
+            "DamagePerShot": round((base_damage * (n ** 1.1)) - base_damage, 2),
+            "HeatGenerated": round((base_heat * (n ** 1.15)) - base_heat, 2),
+        }
+
+    results["COIL - Over"] = over_weapon
+    #pp(results)
+    return results
+
+
+"""
+def expand_coil_modes(entry: dict) -> dict:
+    
+    Accepts a single-entry dict:
+    { "<weapon_key>": { weapon_data } }
+
+    Mutates COIL modes in place.
+    Always returns the entry.
+    
+
+    # Single-entry dict by contract
+    weapon = next(iter(entry.values()))
+
+    if weapon.get("name") != "COIL":
+        return entry
+
+    base_damage = weapon.get("damage", 30)
+    base_heat = weapon.get("heat", 30)
+
+    # Ensure modes is a dict
+    modes = weapon.get("modes") or {}
+    weapon["modes"] = modes
+
+    # Remove existing scalar modes
+    modes.pop("On", None)
+    modes.pop("Over", None)
+
+    for n in range(1, 13):
+        # ON modes
+        modes[f"{n} Pips (On)"] = {
+            "Id": f"On: {n} pips",
+            "isBaseMode": False,
+            "DamagePerShot": round((base_damage * (n ** 0.75)) - base_damage, 2),
+            "HeatGenerated": round((base_heat * (n ** 0.80)) - base_heat, 2),
+        }
+
+        # OVER modes
+        modes[f"Over: {n} Pips"] = {
+            "Id": f"Over: {n} pips",
+            "isBaseMode": False,
+            "DamagePerShot": round((base_damage * (n ** 1.1)) - base_damage, 2),
+            "HeatGenerated": round((base_heat * (n ** 1.15)) - base_heat, 2),
+        }
+
+    return entry
+"""
+                   
+
 def parse_weapon_json(file_path, bonuses, categories):
     with open(file_path, 'r') as file:
         #print("attempting: ", file_path)
@@ -73,40 +225,29 @@ def parse_weapon_json(file_path, bonuses, categories):
     # print(weapon_details)
     return {weapon_name: weapon_details}
 
+
 def group_by_category(data: dict) -> dict:
     grouped = defaultdict(dict)
 
     for name, attrs in data.items():
         category = attrs.get("category")
 
-        if isinstance(category, str):
+        # Special-case COIL variants
+        if attrs.get("name") in ("COIL", "COIL - On", "COIL - Over"):
+            category = "Superweapon - COIL"
+
+        # Special-case Experimental Assault Gauss
+        elif attrs.get("name") == "Experimental Assault Gauss":
+            category = "Superweapon - Experimental Assault Gauss"
+
+        elif isinstance(category, str):
             category = category.replace("Small ", "")
 
         grouped[category][name] = attrs
 
+    # Return sorted by category name
     return dict(sorted(grouped.items()))
 
-'''
-def split_modes(grouped: dict) -> dict:
-    result = {}
-
-    for category, weapons in grouped.items():
-        non_modes = {}
-        modes = {}
-
-        for name, attrs in weapons.items():
-            if attrs.get("modes"):
-                modes[name] = attrs
-            else:
-                non_modes[name] = attrs
-
-        result[category] = {
-            "non_modes": non_modes,
-            "modes": modes,
-        }
-
-    return result
-'''
 def split_modes(grouped: dict) -> dict:
     result = {}
 
@@ -129,7 +270,16 @@ def split_modes(grouped: dict) -> dict:
 
         result[category] = {
             "non_modes": non_modes,
-            "modes": dict(sorted(modes.items())),
+            "modes": dict(
+                sorted(
+                    modes.items(),
+                    key=lambda kv: (
+                        0 if isinstance(kv[0], int) else 1,
+                        kv[0]
+                    )
+                )
+            ),
+
         }
 
     return result
@@ -174,7 +324,7 @@ if __name__ == "__main__":
     grouped = group_by_category(processed_list)
     result = split_modes(grouped)
     modes = get_modes(weapon_directories)
-    pp(grouped)
+    pp(result)
     #cats = print_categories(grouped)
     #print(cats)
     #pp(modes)

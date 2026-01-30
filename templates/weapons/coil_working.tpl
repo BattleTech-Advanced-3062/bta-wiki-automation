@@ -112,7 +112,7 @@
 {%- for weapon in weapons.values() %}
 {%- set mode = weapon.active_mode %}
 |-
-| {{ weapon.name }}
+| {{ weapon.name }} ({{ mode_name }})
 | {{ weapon.ammo }}
 | {{ weapon.hardpoint }}
 | {{ weapon.tonnage }}
