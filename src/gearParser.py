@@ -120,7 +120,7 @@ def expand_coil_modes(entry: dict) -> dict:
             "isBaseMode": False,
             "DamagePerShot": round((base_damage * (n ** 0.75)) - base_damage, 2),
             "HeatGenerated": round((base_heat * (n ** 0.80)) - base_heat, 2),
-        }™
+        }
 
     results["COIL - On"] = on_weapon
 

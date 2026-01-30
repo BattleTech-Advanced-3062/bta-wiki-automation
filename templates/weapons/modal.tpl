@@ -143,5 +143,24 @@
 
 {%- endif %}
 
-
+<div class="toccolours mw-collapsible">
+<div style="font-weight:bold;line-height:1.6;">'''Found On These 'Mechs: (Click Expand For List)'''</div>
+<div class="mw-collapsible-content">
+{%- for weapon in groups["modes"].values() %}
+<div class="toccolours mw-collapsible mw-collapsed">
+<div style="font-weight:bold;line-height:1.6;">{{ weapon.name }}</div>
+<div class="mw-collapsible-content">
+Gear ID: ''{{weapon.filepath}}''
+{% raw %}{{{% endraw %}EquipmentMechs|{{weapon.filepath}}{% raw %}}}{% endraw %}
+</div></div>
+{%- endfor %}
+{%- for weapon in groups["non_modes"].values() %}
+<div class="toccolours mw-collapsible mw-collapsed">
+<div style="font-weight:bold;line-height:1.6;">{{ weapon.name }}</div>
+<div class="mw-collapsible-content">
+Gear ID: ''{{weapon.filepath}}''
+{% raw %}{{{% endraw %}EquipmentMechs|{{weapon.filepath}}{% raw %}}}{% endraw %}
+</div></div>
+{%- endfor %}
+</div></div>
 {%- endfor %}
