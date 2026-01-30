@@ -2,6 +2,9 @@ import os
 import requests
 import json
 from settings import *
+import re
+from pprint import pp
+
 
 def create_wiki_session():
 
@@ -120,3 +123,143 @@ def get_display_name(item):
                     # Use UIName if available, otherwise use Name because fucking vehicledefs
                     ui_name = data['Description'].get('UIName', data['Description'].get('Name'))
                     return ui_name
+
+def transform_settings_to_details(path: str, top_level, id) -> dict:
+    with open(path, "r") as f:
+        data = json.load(f)
+
+    descriptions = []
+    for setting in data.get(top_level, []):
+        bonus = setting[id]
+        # Copy the rest of the keys except "Bonus"
+        entry = {k: v for k, v in setting.items() if k != id}
+        descriptions.append({bonus: entry})
+
+    #print("Details", descriptions)
+
+    return {"Details": descriptions}
+
+def map_details(descriptions, bonus_list, id):
+    # Build lookup: "NPCDEBUFF" -> {"Short": "...", "Long": "...", "Full": "..."}
+    lookup = {}
+    for item in descriptions.get("Details", []):
+        for key, value in item.items():
+            lookup[key] = value
+
+    result = []
+
+    #print(bonus_list)
+    for entry in bonus_list:
+        key, *rest = entry.split(":", 1)
+        key = key.strip()
+
+        # Values after colon, split on commas
+        values = []
+        if rest:
+            values = [v.strip() for v in rest[0].split(",") if v.strip()]
+
+        desc = lookup.get(key)
+        if not desc:
+            result.append(entry)   # fallback — no matching description
+            continue
+
+        # Plug values into the Full template
+        try:
+            text = desc[id].format(*values)
+        except Exception:
+            text = desc[id]   # fallback if formatting fails
+
+        result.append(text)
+
+    return "</br>".join(result)
+
+def map_categories(details: dict, category_list: list | None, id: str):
+    if not category_list:
+        return "AMID SAYS GIVE THESE A CATEGORY"
+
+    WEAPON_ID_PATTERN = re.compile(r"^.(/.+){3,}$")
+
+    # Normalize category_list to always be a flat list of dicts
+    if isinstance(category_list, dict):
+        category_entries = [category_list]
+    elif isinstance(category_list, list):
+        category_entries = []
+        for entry in category_list:
+            if isinstance(entry, dict):
+                category_entries.append(entry)
+            elif isinstance(entry, list):
+                # flatten nested lists
+                for e in entry:
+                    if isinstance(e, dict):
+                        category_entries.append(e)
+    else:
+        # unknown type
+        return "AMID SAYS GIVE THESE A CATEGORY"
+
+    # Build lookup: "w/x/y/z" -> detail dict
+    lookup = {}
+    for item in details.get("Details", []):
+        if isinstance(item, dict):
+            for key, value in item.items():
+                lookup[key] = value
+
+    # Find first CategoryID that matches weapon pattern and return the requested field
+    for entry in category_entries:
+        cid = entry.get("CategoryID")
+        if cid and WEAPON_ID_PATTERN.match(cid):
+            detail = lookup.get(cid)
+            if detail and id in detail:
+                return detail[id]
+
+    # ✅ Explicit fallback
+    return "AMID SAYS GIVE THESE A CATEGORY"
+
+def format_crit_chance(multiplier: float) -> int:
+    return 0 if multiplier == 1 else int((multiplier - 1) * 100)
+
+def clean_vehicle_pathing(value):
+    return value.rsplit("_", 1)[-1].capitalize() if value else ""
+
+def extract_weapon_category(data: dict) -> str | None:
+    category = data.get("Custom", {}).get("Category")
+
+    if isinstance(category, dict):
+        cat_ids = [category.get("CategoryID", "")]
+    elif isinstance(category, list):
+        cat_ids = [
+            entry.get("CategoryID", "")
+            for entry in category
+            if isinstance(entry, dict)
+        ]
+    else:
+        return None
+
+    for cat_id in cat_ids:
+        if cat_id.startswith("w/"):
+            return cat_id.split("/")[-1]
+        elif cat_id is None:
+            cat_id = "uncategorized"
+            return cat_id
+
+    return None
+
+def normalize_modes(modes):
+    if not modes:
+        return None
+
+    def transform(mode):
+        out = {}
+        for k, v in mode.items():
+            if k == "UIName":
+                continue
+            if k == "CriticalChanceMultiplier":
+                out[k] = format_crit_chance(v)
+            else:
+                out[k] = v
+        return out
+
+    return {
+        mode.get("UIName"): transform(mode)
+        for mode in modes
+        if isinstance(mode, dict) and mode.get("UIName")
+    }
