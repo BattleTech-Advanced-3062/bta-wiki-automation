@@ -7,7 +7,7 @@ import pilotParser
 from settings import *
 
 template = environment.get_template("pilot.tpl")
-#session, csrf_token = genUtilities.create_wiki_session()
+session, csrf_token = genUtilities.create_wiki_session()
 
 def check_pilot_page(session, callsign):
     check_resp = session.post(api_url, data={
