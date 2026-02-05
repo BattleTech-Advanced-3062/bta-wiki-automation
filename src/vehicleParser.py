@@ -88,7 +88,7 @@ def process_vehicle_files(directory):
                                     with open(chassisfile_path, 'r') as cf:
                                         cdata = json.load(cf)
                                         vehicle_dict[uiname]["Tonnage"] = cdata.get("Tonnage")
-                                        vehicle_dict[uiname]["Propulsion"] = clean_vehicle_pathing(cdata.get("PathingCapDefID"))
+                                        vehicle_dict[uiname]["Propulsion"] = genUtilities.clean_vehicle_pathing(cdata.get("PathingCapDefID"))
                                         armorvalues = {}
                                         total_armor = 0
                                         total_structure = 0
