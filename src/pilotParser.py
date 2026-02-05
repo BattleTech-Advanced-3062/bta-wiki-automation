@@ -202,6 +202,10 @@ def parse_pilot_json(file_path):
             pilot_details[f"pilottag{tag_counter}"] = formatted_tag
             tag_counter += 1
 
+    pilottags = {key: value for key, value in pilot_details.items() if key.startswith('pilottag')}
+    sorted_tags = dict(sorted(pilottags.items()))
+    formatted_string = "".join(f"|{key} = {value}\n" for key, value in sorted_tags.items())
+    pilot_details["pilottags"] = formatted_string
     return {callsign: pilot_details}
 
 if __name__ == "__main__":

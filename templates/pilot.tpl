@@ -10,40 +10,40 @@
 |piloting = {{piloting}}
 |guts = {{guts}}
 |tactics = {{tactics}}
-{% if multitarget %}|{{multitarget}} = yes{% else %}{% endif -%}
-{% if battlelord %}|{{battlelord}} = yes{% else %}{% endif -%}
-{% if precisionmaster %}|{{precisionmaster}} = yes{% else %}{% endif -%}
-{% if ballisticmaster %}|{{ballisticmaster}} = yes{% else %}{% endif -%}
-{% if energymaster %}|{{energymaster}} = yes{% else %}{% endif -%}
-{% if missilemaster %}|{{missilemaster}} = yes{% else %}{% endif -%}
-{% if stonecold %}|{{stonecold}} = yes{% else %}{% endif -%}
-{% if surefooting %}|{{surefooting}} = yes{% else %}{% endif -%}
-{% if phantom %}|{{phantom}} = yes{% else %}{% endif -%}
-{% if acepilot %}|{{acepilot}} = yes{% else %}{% endif -%}
-{% if invisibletarget %}|{{invisibletarget}} = yes{% else %}{% endif -%}
-{% if sprinter %}|{{sprinter}} = yes{% else %}{% endif -%}
-{% if bulwark %}|{{bulwark}} = yes{% else %}{% endif -%}
-{% if shieldedstance %}|{{shieldedstance}} = yes{% else %}{% endif -%}
-{% if juggernaut %}|{{juggernaut}} = yes{% else %}{% endif -%}
-{% if brawler %}|{{brawler}} = yes{% else %}{% endif -%}
-{% if defensiveformation %}|{{defensiveformation}} = yes{% else %}{% endif -%}
-{% if sensorlock %}|{{sensorlock}} = yes{% else %}{% endif -%}
-{% if targetprediction %}|{{targetprediction}} = yes{% else %}{% endif -%}
-{% if mastertactician %}|{{mastertactician}} = yes{% else %}{% endif -%}
-{% if knifefighter %}|{{knifefighter}} = yes{% else %}{% endif -%}
-{% if eagleeye %}|{{eagleeye}} = yes{% else %}{% endif -%}
-{% if intensifyfirepower %}|{{intensifyfirepower}} = yes{% else %}{% endif -%}
-{% if perfecttargeting %}|{{perfecttargeting}} = yes{% else %}{% endif -%}
-{% if overwhelmingaggression %}|{{overwhelmingaggression}} = yes{% else %}{% endif -%}
-{% if sideslip %}|{{sideslip}} = yes{% else %}{% endif -%}
-{% if streetracer %}|{{streetracer}} = yes{% else %}{% endif -%}
-{% if spotter %}|{{spotter}} = yes{% else %}{% endif -%}
-{% if redundantcomponents %}|{{redundantcomponents}} = yes{% else %}{% endif -%}
-{% if bruteforce %}|{{bruteforce}} = yes{% else %}{% endif -%}
-{% if hulldown %}|{{hulldown}} = yes{% else %}{% endif -%}
-{% if sensorsweep %}|{{sensorsweep}} = yes{% else %}{% endif -%}
-{% if targetpainting %}|{{targetpainting}} = yes{% else %}{% endif -%}
-{% if commandandcontrol %}|{{commandandcontrol}} = yes{% else %}{% endif -%}
+{% if multitarget is defined%}|{{multitarget}} = yes{% else %}{% endif %}
+{% if battlelord is defined%}|{{battlelord}} = yes{% else %}{% endif %}
+{% if precisionmaster is defined%}|{{precisionmaster}} = yes{% else %}{% endif %}
+{% if ballisticmaster is defined%}|{{ballisticmaster}} = yes{% else %}{% endif %}
+{% if energymaster is defined%}|{{energymaster}} = yes{% else %}{% endif %}
+{% if missilemaster is defined%}|{{missilemaster}} = yes{% else %}{% endif %}
+{% if stonecold is defined%}|{{stonecold}} = yes{% else %}{% endif %}
+{% if surefooting is defined%}|{{surefooting}} = yes{% else %}{% endif %}
+{% if phantom is defined%}|{{phantom}} = yes{% else %}{% endif %}
+{% if acepilot is defined%}|{{acepilot}} = yes{% else %}{% endif %}
+{% if invisibletarget is defined%}|{{invisibletarget}} = yes{% else %}{% endif %}
+{% if sprinter is defined%}|{{sprinter}} = yes{% else %}{% endif %}
+{% if bulwark is defined%}|{{bulwark}} = yes{% else %}{% endif %}
+{% if shieldedstance is defined%}|{{shieldedstance}} = yes{% else %}{% endif %}
+{% if juggernaut is defined%}|{{juggernaut}} = yes{% else %}{% endif %}
+{% if brawler is defined%}|{{brawler}} = yes{% else %}{% endif %}
+{% if defensiveformation is defined%}|{{defensiveformation}} = yes{% else %}{% endif %}
+{% if sensorlock is defined%}|{{sensorlock}} = yes{% else %}{% endif %}
+{% if targetprediction is defined%}|{{targetprediction}} = yes{% else %}{% endif %}
+{% if mastertactician is defined%}|{{mastertactician}} = yes{% else %}{% endif %}
+{% if knifefighter is defined%}|{{knifefighter}} = yes{% else %}{% endif %}
+{% if eagleeye is defined%}|{{eagleeye}} = yes{% else %}{% endif %}
+{% if intensifyfirepower is defined%}|{{intensifyfirepower}} = yes{% else %}{% endif %}
+{% if perfecttargeting is defined%}|{{perfecttargeting}} = yes{% else %}{% endif %}
+{% if overwhelmingaggression is defined%}|{{overwhelmingaggression}} = yes{% else %}{% endif %}
+{% if sideslip is defined%}|{{sideslip}} = yes{% else %}{% endif %}
+{% if streetracer is defined%}|{{streetracer}} = yes{% else %}{% endif %}
+{% if spotter is defined%}|{{spotter}} = yes{% else %}{% endif %}
+{% if redundantcomponents is defined%}|{{redundantcomponents}} = yes{% else %}{% endif %}
+{% if bruteforce is defined%}|{{bruteforce}} = yes{% else %}{% endif %}
+{% if hulldown is defined%}|{{hulldown}} = yes{% else %}{% endif %}
+{% if sensorsweep is defined%}|{{sensorsweep}} = yes{% else %}{% endif %}
+{% if targetpainting is defined%}|{{targetpainting}} = yes{% else %}{% endif %}
+{% if commandandcontrol is defined%}|{{commandandcontrol}} = yes{% else %}{% endif %}
 {{pilottags}}
 {{ '}}' }}
 
@@ -58,7 +58,7 @@ None
 
 ===Bonuses:===
 ====Custom Abilities====
-{% if custom_ability_name %}
+{% if custom_ability_name is defined%}
 '''Passive Bonus''': {{ custom_ability_name }}
 
 {{custom_ability_details}}
@@ -69,7 +69,7 @@ None
 
 
 ====Custom Affinties====
-{% if custom_affinity_info %}
+{% if custom_affinity_info is defined%}
 {% for key, value in custom_affinity_info.items() %}
 '''Mech Affinity''': {{ value.chassis_names }} - {{ key }}
 
@@ -85,7 +85,7 @@ None
 
 
 ===Availability:===
-{% if availability %}
+{% if availability is defined%}
 {{ availability }}
 {% else %}
 Can be found as a random starting pilot or in hiring halls. 
