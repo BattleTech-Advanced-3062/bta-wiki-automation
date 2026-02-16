@@ -240,6 +240,10 @@ def group_by_category(data: dict) -> dict:
         elif attrs.get("name") == "Experimental Assault Gauss":
             category = "Superweapon - Experimental Assault Gauss"
 
+        # Special-case Escatos Rotary Railgun
+        elif attrs.get("name") == "Escatos Rotary Railgun":
+            category = "Superweapon - Escatos Rotary Railgun"
+
         elif isinstance(category, str):
             category = category.replace("Small ", "")
 
