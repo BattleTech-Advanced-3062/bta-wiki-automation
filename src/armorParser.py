@@ -12,7 +12,7 @@ def process_armor_files(directories):
     armor_dict = {}
     def process_armor_files(directories):
     armor_dict = {}
-    excluded_files = }
+    excluded_files = {}}
 
     for directory in directories:
         for root, _, files in os.walk(directory):
