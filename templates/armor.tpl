@@ -19,10 +19,12 @@ EnergyProtection: Alters the damage by lasers by the indicated amount
 |-
 ! Armor Type !! Weight Modifier !! Armor Factor !! Reserved Critical Slots !! Additional Effects || Community Content || Mech Availability ||
 |-
-{%- for armor in armors) %}
-| {{ name }} || {{weight_mod}} || {{armor_factor}} || {{crit_slots}} || {{effects}}  || {{com_content}} || <div class="toccolours mw-collapsible mw-collapsed">
+{%- for armor in armors.values() %}
+| {{ armor.name }} || {{armor.weight_mod}} || {{armor.armor_factor}} || {{armor.crit_slots}} || {{armor.effects}}  || {{armor.com_content}} || <div class="toccolours mw-collapsible mw-collapsed">
 <div style="font-weight:bold;line-height:1.6;">'''Availble From: '''</div>
 <div class="mw-collapsible-content">
-{% raw %}{{{% endraw %}EquipmentMechs|{{armor_ID}}{% raw %}}}{% endraw %}
+{% raw %}{{{% endraw %}EquipmentMechs|{{armor.armor_ID}}{% raw %}}}{% endraw %}
 </div>
 |-
+{%- endfor %}
+|}
