@@ -22,6 +22,9 @@ pilot_dir_list = [bta_dir + "BT Advanced Core/StreamingAssets/data/pilot/", bta_
 weapon_dir_list = [bta_dir + "BT Advanced Clan Gear/", bta_dir + "BT Advanced Gear/", 
     bta_dir + "BT Advanced Sanctuary Worlds Equipment/", bta_dir + "Heavy Metal Equipment Module/"]
 
+armor_dir_list = [bta_dir + "BT Advanced Gear/MechengineerGear/data/basic/internals/", bta_dir + "BT Advanced Gear/MechengineerGear/data/exotics/internals/", 
+    bta_dir + "BT Advanced Clan Gear/internals/", bta_dir + "BT Advanced Sanctuary Worlds Equipment/upgrade/", bta_dir + "Community Content/upgrade/"]
+
 cc_weapon_dir_list = [bta_dir + "Community Content/weapon/"]
 
 api_url = "https://www.bta3062.com/api.php"

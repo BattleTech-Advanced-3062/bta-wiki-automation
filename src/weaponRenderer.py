@@ -3,7 +3,7 @@ import sys
 import json
 from pprint import pp
 import genUtilities
-import gearParser
+import weaponParser
 from settings import *
 
 template = environment.get_template("weapons/modal.tpl")
@@ -40,9 +40,9 @@ def render_bulk_entry(categories):
                 weapons.write(template.render(**context))
 
 if __name__ == "__main__":
-    results = gearParser.process_weapon_files(weapon_dir_list)
-    grouped = gearParser.group_by_category(results)
-    split = gearParser.split_modes(grouped)
+    results = weaponParser.process_weapon_files(weapon_dir_list)
+    grouped = weaponParser.group_by_category(results)
+    split = weaponParser.split_modes(grouped)
     render_bulk_entry(split)
     #pp(split)
     #for weapon in results.items():
