@@ -21,8 +21,6 @@ def render_ability_entry(ability):
         page_title = "Template:Ability_" + file_id
         print(f"Writing to {page_title}")
         genUtilities.post_to_wiki(session, csrf_token, page_title, template.render(context))
-        with open(results_filename, mode="w", encoding="utf-8") as results:
-            results.write(template.render(context))
     else:
         # Local file writing
         with open(results_filename, mode="w", encoding="utf-8") as results:
