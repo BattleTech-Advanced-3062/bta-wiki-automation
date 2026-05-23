@@ -47,7 +47,7 @@ def parse_armor_json(file_path, bonuses):
         armor_string = data.get("Custom", {}).get("ArmorStructureChanges", {}).get("ArmorFactor", "None")
         formatted_armor = "None" if armor_string == "None" else format_percentage(armor_string)
         effects_list = dedupe_effects(data.get('Custom', {}).get('BonusDescriptions', []))
-        pp(effects_list)
+        #pp(effects_list)
         armor_details = {
             "name": armor_name,
             "weight_mod": formatted_weight,

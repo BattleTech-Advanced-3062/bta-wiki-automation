@@ -27,4 +27,7 @@ armor_dir_list = [bta_dir + "BT Advanced Gear/MechengineerGear/data/basic/intern
 
 cc_weapon_dir_list = [bta_dir + "Community Content/weapon/"]
 
+ability_dir_list = [bta_dir + "Abilifier/abilities/", bta_dir + "BT Advanced Core/StreamingAssets/data/abilities/",
+    bta_dir + "CustomUnits/ability/"]
+
 api_url = "https://www.bta3062.com/api.php"
