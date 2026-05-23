@@ -263,3 +263,8 @@ def normalize_modes(modes):
         for mode in modes
         if isinstance(mode, dict) and mode.get("UIName")
     }
+
+def strip_color_tags(text):
+    text = re.sub(r'<color=[^>]+>', '', text)
+    text = re.sub(r'</color>', '', text)
+    return text
