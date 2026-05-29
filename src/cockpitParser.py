@@ -32,6 +32,7 @@ def process_cockpit_files(directories):
                         cockpit_entry = parse_cockpit_json(file_path, bonuses)
                         cockpit_dict.update(cockpit_entry)
 
+    cockpit_dict = dict(sorted(cockpit_dict.items(), key=lambda item: item[1]['name']))
     return cockpit_dict
 
 def parse_cockpit_json(file_path, bonuses):
