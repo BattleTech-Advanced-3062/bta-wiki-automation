@@ -36,4 +36,9 @@ cockpit_dir_list = [bta_dir + "BT Advanced Gear/MechengineerGear/data/vanilla/co
 actuator_dir_list = [bta_dir + "BT Advanced Gear/MechengineerGear/data/vanilla/actuators/", bta_dir + "BT Advanced Gear/MechengineerGear/data/exotics/actuators/", 
     bta_dir + "BT Advanced Gear/upgrade/actuators/", bta_dir + "BT Advanced Unique Mechs/upgrade/", bta_dir + "Community Content/upgrade/", bta_dir + "BT Advanced Quad Mechs/upgrade/"]
 
+cooling_dir_list = [bta_dir + "BT Advanced Gear/MechengineerGear/data/vanilla/heatsinks/", bta_dir + "BT Advanced Sanctuary Worlds Equipment/heatsink/"]
+
+kit_dir_list = [bta_dir + "BT Advanced Gear/MechengineerGear/data/basic/engine_parts/", bta_dir + "BT Advanced Clan Gear/engines/", bta_dir + "BT Advanced Sanctuary Worlds Equipment/heatsink/",
+    bta_dir + "Community Content/heatsink/"]
+
 api_url = "https://www.bta3062.com/api.php"
