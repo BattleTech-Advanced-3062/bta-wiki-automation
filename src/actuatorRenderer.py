@@ -7,7 +7,7 @@ import actuatorParser
 from settings import *
 
 template = environment.get_template("actuators.tpl")
-#session, csrf_token = genUtilities.create_wiki_session()
+session, csrf_token = genUtilities.create_wiki_session()
 
 def render_actuator_table(actuators):
     context = {
