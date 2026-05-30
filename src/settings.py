@@ -30,4 +30,10 @@ cc_weapon_dir_list = [bta_dir + "Community Content/weapon/"]
 ability_dir_list = [bta_dir + "Abilifier/abilities/", bta_dir + "BT Advanced Core/StreamingAssets/data/abilities/",
     bta_dir + "CustomUnits/ability/"]
 
+cockpit_dir_list = [bta_dir + "BT Advanced Gear/MechengineerGear/data/vanilla/cockpitMods/", bta_dir + "BT Advanced Gear/MechengineerGear/data/exotics/internals/", 
+    bta_dir + "BT Advanced Gear/upgrade/cockpit/", bta_dir + "BT Advanced Sanctuary Worlds Equipment/upgrade/", bta_dir + "Community Content/upgrade/", bta_dir + "BT Advanced Quad Mechs/upgrade/"]
+
+actuator_dir_list = [bta_dir + "BT Advanced Gear/MechengineerGear/data/vanilla/actuators/", bta_dir + "BT Advanced Gear/MechengineerGear/data/exotics/actuators/", 
+    bta_dir + "BT Advanced Gear/upgrade/actuators/", bta_dir + "BT Advanced Unique Mechs/upgrade/", bta_dir + "Community Content/upgrade/", bta_dir + "BT Advanced Quad Mechs/upgrade/"]
+
 api_url = "https://www.bta3062.com/api.php"
