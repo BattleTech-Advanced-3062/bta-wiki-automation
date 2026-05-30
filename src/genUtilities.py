@@ -140,7 +140,6 @@ def transform_settings_to_details(path: str, top_level, id) -> dict:
     return {"Details": descriptions}
 
 def map_details(descriptions, bonus_list, id):
-    # Build lookup: "NPCDEBUFF" -> {"Short": "...", "Long": "...", "Full": "..."}
     lookup = {}
     for item in descriptions.get("Details", []):
         for key, value in item.items():
@@ -268,3 +267,22 @@ def strip_color_tags(text):
     text = re.sub(r'<color=[^>]+>', '', text)
     text = re.sub(r'</color>', '', text)
     return text
+
+def get_explosion_damage(data):
+    explosion = data.get("Custom", {}).get("ComponentExplosion", {})
+
+    if not explosion:
+        return "None"
+
+    parts = []
+
+    if "ExplosionDamage" in explosion:
+        parts.append(f"Damage: {explosion['ExplosionDamage']}")
+
+    if "HeatDamage" in explosion:
+        parts.append(f"Heat: {explosion['HeatDamage']}")
+
+    if "StabilityDamage" in explosion:
+        parts.append(f"Stability: {explosion['StabilityDamage']}")
+
+    return "</br>".join(parts)
