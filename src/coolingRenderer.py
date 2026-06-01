@@ -6,8 +6,7 @@ import genUtilities
 import coolingParser
 from settings import *
 
-#template = environment.get_template("cooling.tpl")
-template = environment.get_template("mass_cooling.tpl")
+template = environment.get_template("cooling.tpl")
 
 #session, csrf_token = genUtilities.create_wiki_session()
 
