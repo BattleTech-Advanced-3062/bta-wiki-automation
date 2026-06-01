@@ -200,11 +200,14 @@ def parse_exchanger_json(file_path, bonuses):
         exchanger_name = data.get("Description", {}).get("UIName", "unknown")
         weight = data.get("Tonnage", "0")
         slots = data.get("InventorySize", "1")
+        category_values = [x["CategoryID"] for x in data.get("Custom", {}).get("Category", []) if x.get("CategoryID") != "Heatsink"]
+        stackable = next(("Yes" if genUtilities.is_stackable(bta_dir + "BT Advanced Core/settings/categories/Categories_Heatsinks.json", x) else "No" for x in category_values), None)
         effects_list = data.get('Custom', {}).get('BonusDescriptions', [])
         exchanger_details = {
             "name": exchanger_name,
             "weight": weight,
             "slots": slots,
+            "stackable": stackable,
             "effects": genUtilities.map_details(bonuses, effects_list, 'Long') or "None",
             "com_content": "Yes" if "Community" in file_path else "No",
             "ID": data.get("Description", {}).get("Id", "N/A")
@@ -240,11 +243,14 @@ def parse_bank_json(file_path, bonuses):
         bank_name = data.get("Description", {}).get("UIName", "unknown")
         weight = data.get("Tonnage", "0")
         slots = data.get("InventorySize", "1")
+        category_values = [x["CategoryID"] for x in data.get("Custom", {}).get("Category", []) if x.get("CategoryID") != "Heatsink"]
+        stackable = next(("Yes" if genUtilities.is_stackable(bta_dir + "BT Advanced Core/settings/categories/Categories_Heatsinks.json", x) else "No" for x in category_values), None)
         effects_list = data.get('Custom', {}).get('BonusDescriptions', [])
         bank_details = {
             "name": bank_name,
             "weight": weight,
             "slots": slots,
+            "stackable": stackable,
             "effects": genUtilities.map_details(bonuses, effects_list, 'Long') or "None",
             "com_content": "Yes" if "Community" in file_path else "No",
             "ID": data.get("Description", {}).get("Id", "N/A")

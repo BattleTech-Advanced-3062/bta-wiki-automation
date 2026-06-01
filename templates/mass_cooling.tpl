@@ -48,10 +48,10 @@ Thermal Exchangers reduce the overall heat generated from weapon attacks by a fi
 {| class="wikitable sortable"
 |+ Comparison of Exchangers
 |-
-! Exchanger !! Weight !! Slots || Effects ||Community Content ||  Mech Availability ||
+! Exchanger !! Weight !! Slots || Stackable || Effects ||Community Content ||  Mech Availability ||
 |-
 {%- for exchanger in exchangers.values() %}
-| {{ exchanger.name }} || {{exchanger.weight}} || {{exchanger.slots}} || {{exchanger.effects}} || {{exchanger.com_content}} || <div class="toccolours mw-collapsible mw-collapsed">
+| {{ exchanger.name }} || {{exchanger.weight}} || {{exchanger.slots}} || {{exchanger.stackable}} || {{exchanger.effects}} || {{exchanger.com_content}} || <div class="toccolours mw-collapsible mw-collapsed">
 <div style="font-weight:bold;line-height:1.6;">'''Availble From: '''</div>
 <div class="mw-collapsible-content">
 {% raw %}{{{% endraw %}EquipmentMechs|{{exchanger.ID}}{% raw %}}}{% endraw %}
@@ -94,10 +94,10 @@ Heat Banks are installed to allow for more thermal energy venting. However, wher
 {| class="wikitable sortable"
 |+ Comparison of Heat Banks
 |-
-! Bank !! Weight !! Slots || Effects ||Community Content || Mech Availability ||
+! Bank !! Weight !! Slots || Stackable || Effects ||Community Content || Mech Availability ||
 |-
 {%- for bank in banks.values() %}
-| {{ bank.name }} || {{bank.weight}} || {{bank.slots}} || {{bank.effects}} || {{bank.com_content}} || <div class="toccolours mw-collapsible mw-collapsed">
+| {{ bank.name }} || {{bank.weight}} || {{bank.slots}} || {{bank.stackable}} || {{bank.effects}} || {{bank.com_content}} || <div class="toccolours mw-collapsible mw-collapsed">
 <div style="font-weight:bold;line-height:1.6;">'''Availble From: '''</div>
 <div class="mw-collapsible-content">
 {% raw %}{{{% endraw %}EquipmentMechs|{{bank.ID}}{% raw %}}}{% endraw %}

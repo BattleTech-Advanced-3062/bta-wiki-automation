@@ -286,3 +286,16 @@ def get_explosion_damage(data):
         parts.append(f"Stability: {explosion['StabilityDamage']}")
 
     return "</br>".join(parts)
+
+def is_stackable(filepath, name):
+    with open(filepath, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    for setting in data.get("Settings", []):
+        if setting.get("Name") == name:
+            for limit in setting.get("BaseLimits", []):
+                if limit.get("Max") == 1:
+                    return False
+            return True
+
+    return True
