@@ -46,7 +46,7 @@ def parse_engine_json(file_path, bonuses):
         st_slots = get_engine_slot_size(data)
         fixed = "Yes" if "no_salvage" in data.get("Custom").get("Flags", []) else "No"
         effects_list = data.get('Custom', {}).get('BonusDescriptions', [])
-        remove_effects = {"EngineWeight", "EngineReserved", "IsCockpit", "IsSensorsB", "IsSensorsA", "TorsoMount"}
+        remove_effects = {"EngineWeight", "EngineReserved"}
         effects_list_cleaned = [x for x in effects_list if x.split(":", 1)[0] not in remove_effects]
         #pp(effects_list_cleaned)
         engine_details = {

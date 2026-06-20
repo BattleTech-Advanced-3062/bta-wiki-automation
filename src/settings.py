@@ -44,7 +44,10 @@ kit_dir_list = [bta_dir + "BT Advanced Gear/MechengineerGear/data/basic/engine_p
 sink_dir_list = [bta_dir + "BT Advanced Gear/MechengineerGear/data/basic/engine_parts/", bta_dir + "BT Advanced Clan Gear/engines/", 
     bta_dir + "Community Content/heatsink/"]
 
-engine_dir_list = [bta_dir + "BT Advanced Gear/MechengineerGear/data/basic/engine_parts/", bta_dir + "BT Advanced Gear/MechengineerGear/data/exotics/engine_parts/", bta_dir + "BT Advanced Sanctuary Worlds Equipment/heatsink/",
-    bta_dir + "BT Advanced Clan Gear/engines/", bta_dir + "Community Content/heatsink/"]
+engine_dir_list = [bta_dir + "BT Advanced Gear/MechengineerGear/data/basic/engine_parts/", bta_dir + "BT Advanced Gear/MechengineerGear/data/exotics/engine_parts/", 
+    bta_dir + "BT Advanced Sanctuary Worlds Equipment/heatsink/", bta_dir + "BT Advanced Clan Gear/engines/", bta_dir + "Community Content/heatsink/"]
+
+gyro_dir_list = [bta_dir + "Community Content/upgrade/", bta_dir + "BT Advanced Gear/MechengineerGear/data/vanilla/gyro/", bta_dir + "BT Advanced Gear/MechengineerGear/data/vanilla/gyro/",
+    bta_dir + "BT Advanced Gear/MechengineerGear/data/exotics/internals/", bta_dir + "BT Advanced Gear/MechengineerGear/data/basic/internals/", bta_dir + "BT Advanced Quad Mechs/upgrade/"]
 
 api_url = "https://www.bta3062.com/api.php"
