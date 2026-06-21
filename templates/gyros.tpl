@@ -14,7 +14,7 @@ There are two classes of gyro weight:
 
 <div class="noresize">
 {| class="wikitable sortable"
-|+ Comparison of Engines
+|+ Comparison of Gyros
 |-
 ! Engine !! Weighting Type !! Weight !! Slots !! Fixed? || Additional Effects || Community Content || Mech Availability ||
 |-
