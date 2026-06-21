@@ -299,3 +299,10 @@ def is_stackable(filepath, name):
             return True
 
     return True
+
+def extract_bonus_value(effects_list, bonus):
+    for entry in effects_list:
+        if entry.startswith(bonus + ":"):
+            return entry.split(":", 1)[1].strip()
+
+    return None

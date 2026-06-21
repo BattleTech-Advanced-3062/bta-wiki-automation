@@ -53,4 +53,6 @@ gyro_dir_list = [bta_dir + "Community Content/upgrade/", bta_dir + "BT Advanced 
 jumpjet_dir_list = [bta_dir + "Community Content/jumpjet/", bta_dir + "BT Advanced Gear/MechengineerGear/data/vanilla/jumpjets/", bta_dir + "BT Advanced Gear/MechengineerGear/data/JumpJets/", 
     bta_dir + "Heavy Metal Equipment Module/jumpjets/", bta_dir + "BT Advanced Mech Quirks/jumpjet/", bta_dir + "BT Advanced Unique Mechs/jumpjet/"]
 
+airdrop_dir_list = [bta_dir + "Community Content/upgrade/", bta_dir + "StrategicOperations/upgrade/"]
+
 api_url = "https://www.bta3062.com/api.php"
