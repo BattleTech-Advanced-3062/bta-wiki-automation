@@ -42,7 +42,7 @@ def parse_cockpit_json(file_path, bonuses):
         weight = data.get("Tonnage", "0")
         slots = data.get("InventorySize", "1")
         location = data.get("AllowedLocations", "unknown")
-        fixed = "Yes" if "no_salvage" in data.get("Custom").get("Flags", []) else "No"
+        salvageable = "No" if "no_salvage" in data.get("Custom").get("Flags", []) else "Yes"
         effects_list = data.get('Custom', {}).get('BonusDescriptions', [])
         init = next((x.split(":", 1)[1].strip() for x in effects_list if x.startswith("Initiative:")), "0")
         injuries = next((x.split(":", 1)[1].strip() for x in effects_list if x.startswith("Health:")), "0")
@@ -54,7 +54,7 @@ def parse_cockpit_json(file_path, bonuses):
             "weight": weight,
             "slots": slots,
             "location": location,
-            "fixed": fixed,
+            "salvageable": salvageable,
             "init": init,
             "injuries": injuries,
             "effects": genUtilities.map_details(bonuses, effects_list_cleaned, 'Long') or "None",

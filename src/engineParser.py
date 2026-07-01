@@ -44,7 +44,7 @@ def parse_engine_json(file_path, bonuses):
         weight_factor = get_weight_factor(data)
         ct_slots = data.get("InventorySize", "None")
         st_slots = get_engine_slot_size(data)
-        fixed = "Yes" if "no_salvage" in data.get("Custom").get("Flags", []) else "No"
+        salvageable = "No" if "no_salvage" in data.get("Custom").get("Flags", []) else "Yes"
         effects_list = data.get('Custom', {}).get('BonusDescriptions', [])
         remove_effects = {"EngineWeight", "EngineReserved"}
         effects_list_cleaned = [x for x in effects_list if x.split(":", 1)[0] not in remove_effects]
@@ -55,7 +55,7 @@ def parse_engine_json(file_path, bonuses):
             "ct_slots": ct_slots,
             "rt_slots": st_slots,
             "lt_slots": st_slots,
-            "fixed": fixed,
+            "salvageable": salvageable,
             "effects": genUtilities.map_details(bonuses, effects_list_cleaned, 'Long') or "None",
             "com_content": "Yes" if "Community" in file_path else "No",
             "engine_ID": data.get("Description", {}).get("Id", "N/A")

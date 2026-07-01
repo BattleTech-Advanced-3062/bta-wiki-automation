@@ -46,7 +46,7 @@ def parse_jumpjet_json(file_path, bonuses):
         capacity = data.get("JumpCapacity", "None")
         min_tons = data.get("MinTonnage", "None")
         max_tons = data.get("MaxTonnage", "None")
-        fixed = "Yes" if "no_salvage" in data.get("Custom").get("Flags", []) else "No"
+        salvageable = "No" if "no_salvage" in data.get("Custom").get("Flags", []) else "Yes"
         effects_list = data.get('Custom', {}).get('BonusDescriptions', [])
         heat = get_jump_heat(effects_list)
         # Jump Jets per Hex: more understandable than MaxCountJJ
@@ -63,7 +63,7 @@ def parse_jumpjet_json(file_path, bonuses):
             "min_tons": min_tons,
             "max_tons": max_tons,
             "jjph": jjph,
-            "fixed": fixed,
+            "salvageable": salvageable,
             "effects": genUtilities.map_details(bonuses, effects_list_cleaned, 'Long') or "None",
             "com_content": "Yes" if "Community" in file_path else "No",
             "jumpjet_ID": data.get("Description", {}).get("Id", "N/A")

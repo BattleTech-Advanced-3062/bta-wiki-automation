@@ -16,10 +16,10 @@ All engines are subject to the following rules:
 {| class="wikitable sortable"
 |+ Comparison of Engines
 |-
-! Engine !! Weight Factor !! CT Slots !! RT Slots !! LT Slots || Fixed? || Additional Effects || Community Content || Mech Availability ||
+! Engine !! Weight Factor !! CT Slots !! RT Slots !! LT Slots || Salvageable? || Additional Effects || Community Content || Mech Availability ||
 |-
 {%- for engine in engines.values() %}
-| {{ engine.name }} || {{engine.weight_factor}} || {{engine.ct_slots}} || {{engine.rt_slots}} || {{engine.lt_slots}}  || {{engine.fixed}}  || {{engine.effects}} || {{engine.com_content}} || <div class="toccolours mw-collapsible mw-collapsed">
+| {{ engine.name }} || {{engine.weight_factor}} || {{engine.ct_slots}} || {{engine.rt_slots}} || {{engine.lt_slots}}  || {{engine.salvageable}}  || {{engine.effects}} || {{engine.com_content}} || <div class="toccolours mw-collapsible mw-collapsed">
 <div style="font-weight:bold;line-height:1.6;">'''Availble From: '''</div>
 <div class="mw-collapsible-content">
 {% raw %}{{{% endraw %}EquipmentMechs|{{engine.engine_ID}}{% raw %}}}{% endraw %}

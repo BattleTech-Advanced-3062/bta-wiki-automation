@@ -23,8 +23,6 @@ def process_gyro_files(directories):
                     and file not in excluded_files
                 ):
                     file_path = os.path.join(root, file)
-                    pp(file_path)
-
                     with open(file_path, "r") as f:
                         data = json.load(f)
 
@@ -44,7 +42,7 @@ def parse_gyro_json(file_path, bonuses):
         weight_type = get_weight_type(data)
         weight_value = get_weight_value(data)
         slots = data.get("InventorySize", "None")
-        fixed = "Yes" if "no_salvage" in data.get("Custom").get("Flags", []) else "No"
+        salvageable = "No" if "no_salvage" in data.get("Custom").get("Flags", []) else "Yes"
         effects_list = data.get('Custom', {}).get('BonusDescriptions', [])
         remove_effects = {"EngineWeight", "EngineReserved", "Omni", "IsGyro"}
         effects_list_cleaned = [x for x in effects_list if x.split(":", 1)[0] not in remove_effects]
@@ -54,7 +52,7 @@ def parse_gyro_json(file_path, bonuses):
             "weight_type": weight_type,
             "weight_value": weight_value,
             "slots": slots,
-            "fixed": fixed,
+            "salvageable": salvageable,
             "effects": genUtilities.map_details(bonuses, effects_list_cleaned, 'Long') or "None",
             "com_content": "Yes" if "Community" in file_path else "No",
             "gyro_ID": data.get("Description", {}).get("Id", "N/A")

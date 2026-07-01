@@ -16,10 +16,10 @@ There are two classes of gyro weight:
 {| class="wikitable sortable"
 |+ Comparison of Gyros
 |-
-! Engine !! Weighting Type !! Weight !! Slots !! Fixed? || Additional Effects || Community Content || Mech Availability ||
+! Engine !! Weighting Type !! Weight !! Slots !! Salvageable? || Additional Effects || Community Content || Mech Availability ||
 |-
 {%- for gyro in gyros.values() %}
-| {{ gyro.name }} || {{gyro.weight_type}} || {{gyro.weight_value}} || {{gyro.slots}} || {{gyro.fixed}}  || {{gyro.effects}} || {{gyro.com_content}} || <div class="toccolours mw-collapsible mw-collapsed">
+| {{ gyro.name }} || {{gyro.weight_type}} || {{gyro.weight_value}} || {{gyro.slots}} || {{gyro.salvageable}}  || {{gyro.effects}} || {{gyro.com_content}} || <div class="toccolours mw-collapsible mw-collapsed">
 <div style="font-weight:bold;line-height:1.6;">'''Availble From: '''</div>
 <div class="mw-collapsible-content">
 {% raw %}{{{% endraw %}EquipmentMechs|{{gyro.gyro_ID}}{% raw %}}}{% endraw %}
