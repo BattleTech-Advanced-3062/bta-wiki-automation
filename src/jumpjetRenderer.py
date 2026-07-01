@@ -7,7 +7,7 @@ import jumpjetParser
 from settings import *
 
 template = environment.get_template("jumpjets.tpl")
-#session, csrf_token = genUtilities.create_wiki_session()
+session, csrf_token = genUtilities.create_wiki_session()
 
 def render_jumpjet_table(jumpjets):
     context = {

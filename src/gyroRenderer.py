@@ -7,7 +7,7 @@ import gyroParser
 from settings import *
 
 template = environment.get_template("gyros.tpl")
-#session, csrf_token = genUtilities.create_wiki_session()
+session, csrf_token = genUtilities.create_wiki_session()
 
 def render_gyro_table(gyros):
     context = {

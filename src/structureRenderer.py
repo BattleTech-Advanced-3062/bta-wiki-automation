@@ -7,7 +7,7 @@ import structureParser
 from settings import *
 
 template = environment.get_template("structures.tpl")
-#session, csrf_token = genUtilities.create_wiki_session()
+session, csrf_token = genUtilities.create_wiki_session()
 
 def render_structure_table(structures):
     context = {
