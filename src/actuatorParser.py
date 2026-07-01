@@ -44,7 +44,7 @@ def parse_actuator_json(file_path, bonuses):
         location = get_part_category(data)
         part = get_part_category(data)
         allowed = data.get("AllowedLocations", "unknown")
-        fixed = "Yes" if "no_salvage" in data.get("Custom").get("Flags", []) else "No"
+        salvageable = "No" if "no_salvage" in data.get("Custom").get("Flags", []) else "Yes"
         effects_list = data.get('Custom', {}).get('BonusDescriptions', [])
         #remove_effects = {"Initiative", "Health", "IsCockpit", "IsSensorsB", "IsSensorsA", "TorsoMount"}
         #effects_list_cleaned = [x for x in effects_list if x.split(":", 1)[0] not in remove_effects]
@@ -55,7 +55,7 @@ def parse_actuator_json(file_path, bonuses):
             "slots": slots,
             "location": location,
             "allowed": allowed,
-            "fixed": fixed,
+            "salvageable": salvageable,
             "effects": genUtilities.map_details(bonuses, effects_list, 'Long') or "None",
             "com_content": "Yes" if "Community" in file_path else "No",
             "actuator_ID": data.get("Description", {}).get("Id", "N/A")
