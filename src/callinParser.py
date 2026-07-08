@@ -163,7 +163,13 @@ def process_contract_files(directories):
                         contract_entry = parse_contract_json(file_path, bonuses)
                         contract_dict.update(contract_entry)
 
-    contract_dict = dict(sorted(contract_dict.items(), key=lambda item: item[1]['name']))
+    contract_dict = dict(
+        sorted(
+            contract_dict.items(),
+            key=lambda item: (item[1]["type"], item[1]["name"])
+        )
+    )
+    pp(contract_dict)
     return contract_dict
 
 def parse_contract_json(file_path, bonuses):
@@ -208,4 +214,4 @@ def disambiguate_drops(list, value):
 
 if __name__ == "__main__":
     processed_list = process_all_callins()
-    pp(processed_list)
+    #pp(processed_list)
