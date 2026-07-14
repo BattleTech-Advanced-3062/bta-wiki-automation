@@ -8,7 +8,7 @@ from pprint import pp
 from settings import *
 
 template = environment.get_template("factionStore.tpl")
-session, csrf_token = genUtilities.create_wiki_session()
+#session, csrf_token = genUtilities.create_wiki_session()
 
 def check_faction_page(session, faction):
     faction_url = faction.replace(" ", "_")
@@ -127,6 +127,7 @@ def get_faction_specific_info(faction):
     "MallardRepublic": {"logo": "MallardRepublic_logo.png", "name": "Mallard Republic", "link": "Mallard Republic"},
     "Marian": {"logo": "Marian_logo.png", "name": "Marian Hegemony", "link": "Marian Hegemony"},
     "Delphi": {"logo": "Delphi_logo.png", "name": "New Delphi Compact", "link": "New Delphi Compact"},
+    "Oberon": {"logo": "Oberon_logo.png", "name": "Oberon Confederation", "link": "Oberon Confederation"},
     "Outworld": {"logo": "Outworld_logo.png", "name": "Outworlds Alliance", "link": "Outworlds Alliance"},
     "Rasalhague": {"logo": "Rasalhague_logo.png", "name": "Free Rasalhague Republic", "link": "Free Rasalhague Republic"},
     "Rim": {"logo": "RimWorldsRepublic_logo.png", "name": "Rim Worlds Republic", "link": "Rim Worlds Republic"},

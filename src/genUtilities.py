@@ -4,6 +4,8 @@ import json
 from settings import *
 import re
 from pprint import pp
+from collections import Counter
+
 
 
 def create_wiki_session():
@@ -306,3 +308,17 @@ def extract_bonus_value(effects_list, bonus):
             return entry.split(":", 1)[1].strip()
 
     return None
+
+def get_linked_location_counts(data):
+    links = data.get("Custom", {}).get("Linked", {}).get("Links", [])
+
+    locations = Counter(
+        link.get("Location")
+        for link in links
+        if link.get("Location")
+    )
+
+    return "</br>".join(
+        f"{location}: {count}"
+        for location, count in locations.items()
+    )
