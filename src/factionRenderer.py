@@ -8,7 +8,7 @@ from pprint import pp
 from settings import *
 
 template = environment.get_template("factionStore.tpl")
-#session, csrf_token = genUtilities.create_wiki_session()
+session, csrf_token = genUtilities.create_wiki_session()
 
 def check_faction_page(session, faction):
     faction_url = faction.replace(" ", "_")
