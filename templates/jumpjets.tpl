@@ -6,7 +6,7 @@
 |-
 {%- for jumpjet in jumpjets.values() %}
 | {{ jumpjet.name }} || {{jumpjet.weight}} || {{jumpjet.slots}} || {{jumpjet.jjph}} || {{jumpjet.capacity}} || {{jumpjet.heat}} || {{jumpjet.min_tons}} || {{jumpjet.max_tons}} || {{jumpjet.salvageable}} || {{jumpjet.effects}} || {{jumpjet.com_content}} || <div class="toccolours mw-collapsible mw-collapsed">
-<div style="font-weight:bold;line-height:1.6;">'''Availble From: '''</div>
+<div style="font-weight:bold;line-height:1.6;">'''Available From: '''</div>
 <div class="mw-collapsible-content">
 {% raw %}{{{% endraw %}EquipmentMechs|{{jumpjet.jumpjet_ID}}{% raw %}}}{% endraw %}
 </div>

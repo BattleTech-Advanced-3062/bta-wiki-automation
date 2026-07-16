@@ -12,7 +12,7 @@ Hybrid Structure Weight: Provides a limited amount of weight savings via fixed H
 |-
 {%- for structure in structures.values() %}
 | {{ structure.name }} || {{structure.weight_mod}} || {{structure.structure_factor}} || {{structure.slots}} || {{structure.effects}}  || {{structure.com_content}} || <div class="toccolours mw-collapsible mw-collapsed">
-<div style="font-weight:bold;line-height:1.6;">'''Availble From: '''</div>
+<div style="font-weight:bold;line-height:1.6;">'''Available From: '''</div>
 <div class="mw-collapsible-content">
 {% raw %}{{{% endraw %}EquipmentMechs|{{structure.structure_ID}}{% raw %}}}{% endraw %}
 </div>

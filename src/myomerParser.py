@@ -53,12 +53,15 @@ def parse_myomer_json(file_path, bonuses):
         myomer_name = data.get("Description", {}).get("Name", "unknown")
         myomer_UIname = data.get("Description", {}).get("UIName", "unknown")
         id = data.get("Description", {}).get("Id", "N/A")
-        pp(id)
         parents = build_parent_index(csv_files_index)
-        collection = find_faction_collection(id, parents)
-        pp(collection)
-        id_lookup = look_up_collection(collection) if collection else None
-        pp(id_lookup)
+        faction_collection = find_collection_by_type(id, parents, "faction")
+        faction_id_lookup = look_up_collection(faction_collection) if faction_collection else None
+        #factory_collection = find_collection_by_type(id, parents, "factory")
+        #factory_id_lookup = look_up_collection(factory_collection) if factory_collection else None
+        #print(f"Found {id} in {facttory_id_lookup}")
+        #pp(factory_collection)
+        #id_lookup = look_up_collection(collection) if collection else None
+        #pp(id_lookup)
         slots = data.get('Custom', {}).get('DynamicSlots', {}).get('ReservedSlots', 0)
         effects_list = data.get('Custom', {}).get('BonusDescriptions', [])
         remove_effects = {"Dynamic", "SetReservedSlotsFullBody"}
@@ -70,7 +73,8 @@ def parse_myomer_json(file_path, bonuses):
             "slots": slots,
             "effects": genUtilities.map_details(bonuses, effects_list_cleaned, 'Long') or "None",
             "com_content": "Yes" if "Community" in file_path else "No",
-            "myomer_ID": id
+            "myomer_ID": id,
+            "faction_store": faction_id_lookup
         }
         #pp(myomer_details)
     return {myomer_name: myomer_details}
@@ -148,7 +152,7 @@ def build_parent_index(collection_files):
 
     return parents
 
-def find_faction_collection(item, parents):
+def find_collection_by_type(item, parents, store_type):
     """
     Walks upward from an item until it finds a collection containing 'faction'.
     """
@@ -161,11 +165,13 @@ def find_faction_collection(item, parents):
         visited.add(current)
 
         for parent in parents.get(current, []):
-            if "faction" in parent.lower():
+            if store_type in parent.lower():
                 return parent
 
             result = search(parent)
+            print(f"Searching for {item} in {parent} of store type {store_type}")
             if result:
+                print(f"Found {item} in {parent}")
                 return result
 
         return None
@@ -179,7 +185,8 @@ def look_up_collection(collection):
         store = "faction"
         bta_dir + "DynamicShops/fshops/"
         faction = get_faction(bta_dir + "DynamicShops/fshops/", collection)
-        return store, faction
+        print(f"Found {collection} in {faction} store")
+        return faction
     elif "factory" in collection:
         store = "factory"
         for root, _, files in os.walk(bta_dir + "DynamicShops/factories/"):
@@ -189,7 +196,7 @@ def look_up_collection(collection):
                 with open(file_path, "r") as f:
                     data = json.load(f)
                     factory = data[0].get("factory", "None")
-        return store, factory
+        return factory
     
 def get_faction(directory, item_collection):
     for root, _, files in os.walk(directory):
@@ -217,6 +224,6 @@ if __name__ == "__main__":
     #csv_files_index = genUtilities.index_csv_files(csv_dir_list)
     #parents = build_parent_index(csv_files_index)
     #pp(thing)
-    #collection = find_faction_collection("Gear_Airdrop_Beacon_BA_Gnome", parents)
+    #collection = find_collection_by_type("Gear_Airdrop_Beacon_BA_Gnome", parents)
     #pp(collection)
 
