@@ -36,7 +36,6 @@ def process_myomer_files(directories):
                             continue
 
                     categories = data.get("Custom", {}).get("Category", [])
-                    #print(type(categories), categories)
                     if isinstance(categories, dict):
                         categories = [categories]
                     elif categories is None:
@@ -56,6 +55,7 @@ def parse_myomer_json(file_path, bonuses):
         parents = build_parent_index(csv_files_index)
         faction_collection = find_collection_by_type(id, parents, "faction")
         faction_id_lookup = look_up_collection(faction_collection) if faction_collection else None
+        faction_store = genUtilities.faction_table_lookup(faction_id_lookup, "name")
         #factory_collection = find_collection_by_type(id, parents, "factory")
         #factory_id_lookup = look_up_collection(factory_collection) if factory_collection else None
         #print(f"Found {id} in {facttory_id_lookup}")
@@ -74,7 +74,7 @@ def parse_myomer_json(file_path, bonuses):
             "effects": genUtilities.map_details(bonuses, effects_list_cleaned, 'Long') or "None",
             "com_content": "Yes" if "Community" in file_path else "No",
             "myomer_ID": id,
-            "faction_store": faction_id_lookup
+            "faction_store": faction_store
         }
         #pp(myomer_details)
     return {myomer_name: myomer_details}
@@ -94,7 +94,6 @@ def process_supercharger_files(directories):
                             continue
 
                     categories = data.get("Custom", {}).get("Category", [])
-                    #print(type(categories), categories)
                     if isinstance(categories, dict):
                         categories = [categories]
                     elif categories is None:
@@ -169,9 +168,7 @@ def find_collection_by_type(item, parents, store_type):
                 return parent
 
             result = search(parent)
-            print(f"Searching for {item} in {parent} of store type {store_type}")
             if result:
-                print(f"Found {item} in {parent}")
                 return result
 
         return None
@@ -185,7 +182,6 @@ def look_up_collection(collection):
         store = "faction"
         bta_dir + "DynamicShops/fshops/"
         faction = get_faction(bta_dir + "DynamicShops/fshops/", collection)
-        print(f"Found {collection} in {faction} store")
         return faction
     elif "factory" in collection:
         store = "factory"
@@ -218,7 +214,6 @@ def get_faction(directory, item_collection):
     return None
 
 if __name__ == "__main__":
-    #print(myomer_dir_list)
     processed_list = process_all_speed()
     #pp(processed_list)
     #csv_files_index = genUtilities.index_csv_files(csv_dir_list)

@@ -322,3 +322,6 @@ def get_linked_location_counts(data):
         f"{location}: {count}"
         for location, count in locations.items()
     )
+
+def faction_table_lookup(faction, field):
+    return faction_lookup.get(faction, {}).get(field)
