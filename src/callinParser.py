@@ -142,6 +142,7 @@ def parse_ba_json(file_path, bonuses):
 def process_contract_files(directories):
     contract_dict = {}
     excluded_files = {""}
+    excluded_patterns = {"Gear_Contract_BattleArmor*"}
 
     for directory in directories:
         for root, _, files in os.walk(directory):
@@ -149,7 +150,7 @@ def process_contract_files(directories):
                 if (
                     file.startswith("Gear_Contract")
                     and file.endswith(".json")
-                    and file not in excluded_files
+                    and not any(fnmatch(file, pattern) for pattern in excluded_patterns)
                 ):
                     file_path = os.path.join(root, file)
                     #pp(file_path)

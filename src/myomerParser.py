@@ -23,26 +23,31 @@ def process_all_speed():
 
 def process_myomer_files(directories):
     myomer_dict = {}
-
+    excluded_files = {"Gear_TSM_Omni.json"}
     for directory in directories:
         for root, _, files in os.walk(directory):
             for file in files:
-                file_path = os.path.join(root, file)
+                if (
+                    file.startswith("Gear_")
+                    and file.endswith(".json")
+                    and file not in excluded_files
+                ):
+                    file_path = os.path.join(root, file)
 
-                with open(file_path, "r") as f:
-                    data = json.load(f)
+                    with open(file_path, "r") as f:
+                        data = json.load(f)
 
-                    if "BLACKLISTED" in data.get("ComponentTags", {}).get("items", []) or "DEPRECATED" in json.dumps(data):
-                            continue
-
-                    categories = data.get("Custom", {}).get("Category", [])
-                    if isinstance(categories, dict):
-                        categories = [categories]
-                    elif categories is None:
-                        categories = []
-                    if any(category.get("CategoryID") == "Myomer" for category in categories):
-                        myomer_entry = parse_myomer_json(file_path, bonuses)
-                        myomer_dict.update(myomer_entry)
+                        if "BLACKLISTED" in data.get("ComponentTags", {}).get("items", []) or "DEPRECATED" in json.dumps(data):
+                                continue
+                        
+                        categories = data.get("Custom", {}).get("Category", [])
+                        if isinstance(categories, dict):
+                            categories = [categories]
+                        elif categories is None:
+                            categories = []
+                        if any(category.get("CategoryID") == "Myomer" for category in categories):
+                            myomer_entry = parse_myomer_json(file_path, bonuses)
+                            myomer_dict.update(myomer_entry)
     myomer_dict = dict(sorted(myomer_dict.items(), key=lambda item: item[1]['name']))
     return myomer_dict
 
