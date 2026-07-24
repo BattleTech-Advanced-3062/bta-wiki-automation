@@ -21,7 +21,7 @@ EnergyProtection: Alters the damage by lasers by the indicated amount
 |-
 {%- for armor in armors.values() %}
 | {{ armor.name }} || {{armor.weight_mod}} || {{armor.armor_factor}} || {{armor.crit_slots}} || {{armor.effects}}  || {{armor.com_content}} || <div class="toccolours mw-collapsible mw-collapsed">
-<div style="font-weight:bold;line-height:1.6;">'''Availble From: '''</div>
+<div style="font-weight:bold;line-height:1.6;">'''Available From: '''</div>
 <div class="mw-collapsible-content">
 {% raw %}{{{% endraw %}EquipmentMechs|{{armor.armor_ID}}{% raw %}}}{% endraw %}
 </div>

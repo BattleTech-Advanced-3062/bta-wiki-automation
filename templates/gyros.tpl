@@ -20,7 +20,7 @@ There are two classes of gyro weight:
 |-
 {%- for gyro in gyros.values() %}
 | {{ gyro.name }} || {{gyro.weight_type}} || {{gyro.weight_value}} || {{gyro.slots}} || {{gyro.salvageable}}  || {{gyro.effects}} || {{gyro.com_content}} || <div class="toccolours mw-collapsible mw-collapsed">
-<div style="font-weight:bold;line-height:1.6;">'''Availble From: '''</div>
+<div style="font-weight:bold;line-height:1.6;">'''Available From: '''</div>
 <div class="mw-collapsible-content">
 {% raw %}{{{% endraw %}EquipmentMechs|{{gyro.gyro_ID}}{% raw %}}}{% endraw %}
 </div>

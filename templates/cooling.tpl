@@ -12,7 +12,7 @@ A 'Mech's cooling system provides heat dissipation for components inside the mec
 |-
 {%- for kit in kits.values() %}
 | {{ kit.name }} || {{kit.validity}} || {{kit.explosion}} || {{kit.effects}} || {{kit.com_content}} || <div class="toccolours mw-collapsible mw-collapsed">
-<div style="font-weight:bold;line-height:1.6;">'''Availble From: '''</div>
+<div style="font-weight:bold;line-height:1.6;">'''Available From: '''</div>
 <div class="mw-collapsible-content">
 {% raw %}{{{% endraw %}EquipmentMechs|{{kit.ID}}{% raw %}}}{% endraw %}
 </div>
@@ -32,7 +32,7 @@ Heat Sinks actively expel thermal energy generated from firing weaponry or other
 |-
 {%- for heatsink in heatsinks.values() %}
 | {{ heatsink.name }} || {{heatsink.weight}} || {{heatsink.slots}} ||{{heatsink.dissipation}} || {{heatsink.explosion}} || {{heatsink.effects}} || {{heatsink.com_content}} || <div class="toccolours mw-collapsible mw-collapsed">
-<div style="font-weight:bold;line-height:1.6;">'''Availble From: '''</div>
+<div style="font-weight:bold;line-height:1.6;">'''Available From: '''</div>
 <div class="mw-collapsible-content">
 {% raw %}{{{% endraw %}EquipmentMechs|{{heatsink.ID}}{% raw %}}}{% endraw %}
 </div>
@@ -52,7 +52,7 @@ Thermal Exchangers reduce the overall heat generated from weapon attacks by a fi
 |-
 {%- for exchanger in exchangers.values() %}
 | {{ exchanger.name }} || {{exchanger.weight}} || {{exchanger.slots}} || {{exchanger.stackable}} || {{exchanger.effects}} || {{exchanger.com_content}} || <div class="toccolours mw-collapsible mw-collapsed">
-<div style="font-weight:bold;line-height:1.6;">'''Availble From: '''</div>
+<div style="font-weight:bold;line-height:1.6;">'''Available From: '''</div>
 <div class="mw-collapsible-content">
 {% raw %}{{{% endraw %}EquipmentMechs|{{exchanger.ID}}{% raw %}}}{% endraw %}
 |-
@@ -98,7 +98,7 @@ Heat Banks are installed to allow for more thermal energy venting. However, wher
 |-
 {%- for bank in banks.values() %}
 | {{ bank.name }} || {{bank.weight}} || {{bank.slots}} || {{bank.stackable}} || {{bank.effects}} || {{bank.com_content}} || <div class="toccolours mw-collapsible mw-collapsed">
-<div style="font-weight:bold;line-height:1.6;">'''Availble From: '''</div>
+<div style="font-weight:bold;line-height:1.6;">'''Available From: '''</div>
 <div class="mw-collapsible-content">
 {% raw %}{{{% endraw %}EquipmentMechs|{{bank.ID}}{% raw %}}}{% endraw %}
 </div>
@@ -116,7 +116,7 @@ Heat Banks are installed to allow for more thermal energy venting. However, wher
 |-
 {%- for ecooling in ecoolings.values() %}
 | {{ ecooling.name }} || {{ecooling.weight}} || {{ecooling.engine_size}} || {{ecooling.effects}} || {{ecooling.com_content}} ||<div class="toccolours mw-collapsible mw-collapsed">
-<div style="font-weight:bold;line-height:1.6;">'''Availble From: '''</div>
+<div style="font-weight:bold;line-height:1.6;">'''Available From: '''</div>
 <div class="mw-collapsible-content">
 {% raw %}{{{% endraw %}EquipmentMechs|{{ecooling.ID}}{% raw %}}}{% endraw %}
 </div>

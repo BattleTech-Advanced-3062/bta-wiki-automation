@@ -20,7 +20,7 @@ All engines are subject to the following rules:
 |-
 {%- for engine in engines.values() %}
 | {{ engine.name }} || {{engine.weight_factor}} || {{engine.ct_slots}} || {{engine.rt_slots}} || {{engine.lt_slots}}  || {{engine.salvageable}}  || {{engine.effects}} || {{engine.com_content}} || <div class="toccolours mw-collapsible mw-collapsed">
-<div style="font-weight:bold;line-height:1.6;">'''Availble From: '''</div>
+<div style="font-weight:bold;line-height:1.6;">'''Available From: '''</div>
 <div class="mw-collapsible-content">
 {% raw %}{{{% endraw %}EquipmentMechs|{{engine.engine_ID}}{% raw %}}}{% endraw %}
 </div>

@@ -99,45 +99,7 @@ def render_factionstore(faction, items):
 
 def get_faction_specific_info(faction):
     # This unfortunately needs to be maintained manually
-    faction_lookup = {
-    "Rezak": {"logo": "AuriganRestoration_logo.png", "name": "Aurigan Coalition", "link": "Aurigan Restoration (Arano)"},
-    "AuriganPirate": {"logo": "AuriganRestoration_logo.png", "name": "Aurigan Coalition", "link": "Aurigan Restoration (Arano)"},
-    "Aurigan": {"logo": "AuriganRestoration_logo.png", "name": "Aurigan Restoration (Arano)", "link": "Aurigan Coalition"},
-    "Calderon": {"logo": "Calderon_Protectorate_logo.png", "name": "Calderon Protectorate", "link": "Calderon Protectorate"},
-    "Liao": {"logo": "Liao_logo.png", "name": "Capellan Confederation (Liao)", "link": "Capellan Confederation"},
-    "Chainelane": {"logo": "Chainelane_logo.png", "name": "Chainelane Isles", "link": "Chainelane Isles"},
-    "Circinus": {"logo": "Circinus_logo.png", "name": "Circinus Federation", "link": "Circinus Federation"},
-    "ClanFireMandrill": {"logo": "ClanFireMandrill_logo.png", "name": "Clan Fire Mandrill", "link": "Clan Fire Mandrill"},
-    "ClanGoliathScorpion": {"logo": "ClanGoliathScorpion_logo.png", "name": "Clan Goliath Scorpion", "link": "Clan Goliath Scorpion"},
-    "ClanNovaCat": {"logo": "ClanNovaCat_logo.png", "name": "Clan Nova Cat", "link": "Clan Nova Cat"},
-    "ClanSnowRaven": {"logo": "ClanSnowRaven_logo.png", "name": "Clan Snow Raven", "link": "Clan Snow Raven"},
-    "Comstar": {"logo": "ComStar_logo.png", "name": "ComStar", "link": "ComStar"},
-    "DaneSacellum": {"logo": "DaneSacellum_logo.png", "name": "Dane Sacellum", "link": "Dane Sacellum"},
-    "Kurita": {"logo": "Kurita_logo.png", "name": "Draconis Combine (Kurita)", "link": "Draconis Combine"},
-    "Davion": {"logo": "Davion_logo.png", "name": "Federated Suns (Davion)", "link": "Federated Suns"},
-    "Marik": {"logo": "Marik_logo.png", "name": "Free Worlds League", "link": "Free Worlds League"},
-    "Fronc": {"logo": "Fronc_Reaches_logo.png", "name": "Fronc Reaches", "link": "Fronc Reaches"},
-    "Hanse": {"logo": "Hanse_logo.png", "name": "Hanseatic League", "link": "Hanseatic League"},
-    "Illyrian": {"logo": "Illyrian_logo.png", "name": "Illyrian Palatinate", "link": "Illyrian Palatinate"},
-    "JacobsonHaven": {"logo": "JacobsonHaven_logo.png", "name": "Jacobson Haven", "link": "Jacobson Haven"},
-    "JarnFolk": {"logo": "JarnFolk_logo.png", "name": "JàrnFòlk", "link": "JàrnFòlk"},
-    "Lothian": {"logo": "Lothian_logo.png", "name": "Lothian League", "link": "Lothian League"},
-    "Steiner": {"logo": "Steiner_logo.png", "name": "Lyran Commonwealth (Steiner)", "link": "Lyran Commonwealth"},
-    "Magistracy": {"logo": "MagistracyOfCanopus_logo.png", "name": "Magistracy of Canopus", "link": "Magistracy of Canopus"},
-    "MallardRepublic": {"logo": "MallardRepublic_logo.png", "name": "Mallard Republic", "link": "Mallard Republic"},
-    "Marian": {"logo": "Marian_logo.png", "name": "Marian Hegemony", "link": "Marian Hegemony"},
-    "Delphi": {"logo": "Delphi_logo.png", "name": "New Delphi Compact", "link": "New Delphi Compact"},
-    "Outworld": {"logo": "Outworld_logo.png", "name": "Outworlds Alliance", "link": "Outworlds Alliance"},
-    "Rasalhague": {"logo": "Rasalhague_logo.png", "name": "Free Rasalhague Republic", "link": "Free Rasalhague Republic"},
-    "Rim": {"logo": "RimWorldsRepublic_logo.png", "name": "Rim Worlds Republic", "link": "Rim Worlds Republic"},
-    "RimWorldsRepublic": {"logo": "RimWorldsRepublic_logo.png", "name": "Rim Worlds Republic", "link": "Rim Worlds Republic"},
-    "ScorpionEmpire": {"logo": "ScorpionEmpire_logo.png", "name": "Scorpion Empire", "link": "Scorpion Empire"},
-    "Ives": {"logo": "Ives_logo.png", "name": "St. Ives Compact", "link": "St. Ives Compact"},
-    "Taurian": {"logo": "TaurianConcordat_logo.png", "name": "Taurian Concordat", "link": "Taurian Concordat"},
-    "Cameron": {"logo": "Cameron_logo.png", "name": "Terran Hegemony (Cameron)", "link": "Terran Hegemony"},
-    "Tortuga": {"logo": "Tortuga_logo.png", "name": "Tortuga Dominions", "link": "Tortuga Dominions"},
-    "WordOfBlake": {"logo": "WordOfBlake_logo.png", "name": "Word of Blake", "link": "Word of Blake"}
-    }
+    
     return faction_lookup[faction]
 
 if __name__ == "__main__":
