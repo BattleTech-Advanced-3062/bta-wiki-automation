@@ -62,6 +62,10 @@ structure_dir_list = [bta_dir + "Community Content/upgrade/", bta_dir + "BT Adva
 
 myomer_dir_list = [bta_dir + "BT Advanced Gear/upgrade", bta_dir + "BT Advanced Clan Gear/internals", bta_dir + "BT Advanced Sanctuary Worlds Equipment/upgrade"]
 
+ecm_dir_list = [bta_dir + "BT Advanced Gear/upgrade/general/", bta_dir + "BT Advanced Clan Gear/internals/", bta_dir + "BT Advanced Sanctuary Worlds Equipment/upgrade", bta_dir + "Community Content/upgrade/"]
+
+
+
 api_url = "https://www.bta3062.com/api.php"
 
 faction_lookup = {
