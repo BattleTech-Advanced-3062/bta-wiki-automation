@@ -1,4 +1,5 @@
 <div id="" class="" style="clear: right; margin: -1em 0 0 10px; float: right; padding: 10px; background: transparent; width: 220px; ">__TOC__</div>
+A full explanation of how Beacons and Strafing Runs are used can be found [[https://www.bta3062.com/index.php?title=Beacons_and_Strafing_Runs|here]].
 
 = Beacons =
 <div class="noresize">

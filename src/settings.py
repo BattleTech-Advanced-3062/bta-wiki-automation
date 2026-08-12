@@ -64,7 +64,7 @@ myomer_dir_list = [bta_dir + "BT Advanced Gear/upgrade", bta_dir + "BT Advanced 
 
 ecm_dir_list = [bta_dir + "BT Advanced Gear/upgrade/general/", bta_dir + "BT Advanced Clan Gear/internals/", bta_dir + "BT Advanced Sanctuary Worlds Equipment/upgrade", bta_dir + "Community Content/upgrade/"]
 
-
+probe_dir_list = ecm_dir_list
 
 api_url = "https://www.bta3062.com/api.php"
 

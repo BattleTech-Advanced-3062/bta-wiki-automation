@@ -16,7 +16,7 @@ The below units all¹ benefit from the following Auras:
 |-
 | VRPP Scrambling || 120 || Imposes massive accuracy debuff to VRPP systems
 |-
-| DroneOS Scrambling || 120 || Imposes massive accuracy debuff to DroneOS systems, impedes walk and run speeds
+| DroneOS Scrambling || 120 || Imposes massive accuracy debuff to Inner Sphere DroneOS systems, impedes walk and run speeds
 |}
 
 ¹ <small>excepting the Experimental EWAR Suite</small>
@@ -26,13 +26,31 @@ The below units all¹ benefit from the following Auras:
 {| class="wikitable sortable"
 |+ Comparison of ECMs
 |-
-! ECM !! Weight !! Slots !! Salvageable? || Effects || Community Content || Mech Availability ||
+! ECM !! Weight !! Slots !! Salvageable? || Effects || Community Content || Mech Availability 
 |-
 {%- for ecm in ecms.values() %}
 | {{ ecm.name }} || {{ ecm.weight }} || {{ ecm.slots }} || {{ ecm.salvageable }} || {{ecm.effects}} || {{ecm.com_content}} || <div class="toccolours mw-collapsible mw-collapsed">
 <div style="font-weight:bold;line-height:1.6;">'''Available From: '''</div>
 <div class="mw-collapsible-content">
 {% raw %}{{{% endraw %}EquipmentMechs|{{ecm.ecm_ID}}{% raw %}}}{% endraw %}
+</div>
+|-
+{%- endfor %}
+|}
+
+== Probes ==
+
+<div class="noresize">
+{| class="wikitable sortable"
+|+ Comparison of Probes
+|-
+! Probe !! Weight !! Slots !! Salvageable? || Sensor Range || Sight Range || Probe Heat || Probe Bubble || Effects || Community Content || Mech Availability 
+|-
+{%- for probe in probes.values() %}
+| {{ probe.name }} || {{ probe.weight }} || {{ probe.slots }} || {{ probe.salvageable }} || {{probe.sensor_range}} || {{probe.sight_range}} || {{probe.probe_heat}} || {{probe.probe_bubble}} || {{probe.effects}} || {{probe.com_content}} || <div class="toccolours mw-collapsible mw-collapsed">
+<div style="font-weight:bold;line-height:1.6;">'''Available From: '''</div>
+<div class="mw-collapsible-content">
+{% raw %}{{{% endraw %}EquipmentMechs|{{probe.probe_ID}}{% raw %}}}{% endraw %}
 </div>
 |-
 {%- endfor %}
