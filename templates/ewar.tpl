@@ -16,10 +16,11 @@ The below units all¹ benefit from the following Auras:
 |-
 | VRPP Scrambling || 120 || Imposes massive accuracy debuff to VRPP systems
 |-
-| DroneOS Scrambling || 120 || Imposes massive accuracy debuff to Inner Sphere DroneOS systems, impedes walk and run speeds
+| DroneOS Scrambling || 120 || Imposes massive accuracy debuff to Inner Sphere DroneOS² systems, impedes walk and run speeds
 |}
 
 ¹ <small>excepting the Experimental EWAR Suite</small>
+² <small>note that this ''only'' indicates IS DroneOS systems, currrently only on the Celerity mech
 
 === Units ===
 <div class="noresize">
