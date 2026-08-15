@@ -8,7 +8,7 @@ from settings import *
 
 template = environment.get_template("ewar.tpl")
 
-session, csrf_token = genUtilities.create_wiki_session()
+#session, csrf_token = genUtilities.create_wiki_session()
 
 def render_ewar_table(data):
     #context = {

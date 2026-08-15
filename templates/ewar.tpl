@@ -20,6 +20,7 @@ The below units all¹ benefit from the following Auras:
 |}
 
 ¹ <small>excepting the Experimental EWAR Suite</small>
+
 ² <small>note that this ''only'' indicates IS DroneOS systems, currrently only on the Celerity mech
 
 === Units ===
