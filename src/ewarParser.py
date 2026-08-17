@@ -68,7 +68,8 @@ def parse_ecm_json(file_path, bonuses):
         remove_effects = {"C3Jamming"}
         effects_list_cleaned = [x for x in effects_list if x.split(":", 1)[0] not in remove_effects]
         #pp(effects_list_cleaned)
-        auras = extract_aura_effects(data)
+        # Auras too complicated to try parsing for limited pay off
+        #auras = extract_aura_effects(data)
         ecm_details = {
             "name": ecm_name,
             "weight": weight,
@@ -81,31 +82,31 @@ def parse_ecm_json(file_path, bonuses):
         #pp(ecm_details)
     return {ecm_name: ecm_details}
 
-def extract_aura_effects(data):
-    results = []
+# def extract_aura_effects(data):
+#     results = []
 
-    for aura in data.get("Auras", []):
-        aura_data = {
-            "name": aura.get("Name"),
-            "range": aura.get("Range"),
-            "statusEffects": []
-        }
+#     for aura in data.get("Auras", []):
+#         aura_data = {
+#             "name": aura.get("Name"),
+#             "range": aura.get("Range"),
+#             "statusEffects": []
+#         }
 
-        for effect in aura.get("statusEffects", []):
-            description = effect.get("Description", {})
-            statistic_data = effect.get("statisticData", {})
+#         for effect in aura.get("statusEffects", []):
+#             description = effect.get("Description", {})
+#             statistic_data = effect.get("statisticData", {})
 
-            aura_data["statusEffects"].append({
-                "descriptionId": description.get("Id"),
-                "details": description.get("Details"),
-                #"statName": statistic_data.get("statName"),
-                #"operation": statistic_data.get("operation"),
-                #"modValue": statistic_data.get("modValue")
-            })
+#             aura_data["statusEffects"].append({
+#                 "descriptionId": description.get("Id"),
+#                 "details": description.get("Details"),
+#                 "statName": statistic_data.get("statName"),
+#                 "operation": statistic_data.get("operation"),
+#                 "modValue": statistic_data.get("modValue")
+#             })
 
-        results.append(aura_data)
+#         results.append(aura_data)
 
-    return results
+#     return results
 
 def process_probe_files(directories):
     probe_dict = {}
@@ -158,7 +159,7 @@ def parse_probe_json(file_path, bonuses):
         remove_effects = {"Sensors", "Sight", "ProbeHeat", "ProbeBubble"}
         effects_list_cleaned = [x for x in effects_list if x.split(":", 1)[0] not in remove_effects]
         #pp(effects_list_cleaned)
-        auras = extract_aura_effects(data)
+        #auras = extract_aura_effects(data)
         probe_details = {
             "name": probe_name,
             "weight": weight,

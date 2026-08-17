@@ -38,7 +38,7 @@ def process_quirk_files(directories):
                         #    categories = [categories]
                         #elif categories is None:
                         #    categories = []
-                        #if any(category.get("CategoryID") == "ECM" for category in categories):
+                        #if any(category.get("CategoryID") == "Quirk" for category in categories):
                         quirk_entry = parse_quirk_json(file_path, bonuses)
                         quirk_dict.update(quirk_entry)
 

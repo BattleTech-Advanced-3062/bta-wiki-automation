@@ -8,12 +8,9 @@ from settings import *
 
 template = environment.get_template("ewar.tpl")
 
-#session, csrf_token = genUtilities.create_wiki_session()
+session, csrf_token = genUtilities.create_wiki_session()
 
 def render_ewar_table(data):
-    #context = {
-        #"ewars": ewars
-    #}
     if "GITHUB_ACTIONS" in os.environ or "LOCAL_OVERRIDE" in os.environ:
         # Wiki page writing
         print("Posting to the wiki")
@@ -27,6 +24,5 @@ def render_ewar_table(data):
                 ewars.write(template.render(**data))
 
 if __name__ == "__main__":
-    #results = ewarParser.process_ewar_files(bta_dir + "BT Advanced Gear/MechengineerGear/data/basic/engine_parts/")
     result = ewarParser.process_all_ewar()
     render_ewar_table(result)

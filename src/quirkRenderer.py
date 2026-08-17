@@ -15,7 +15,6 @@ def render_quirk_entry(quirk):
     quirk_title = quirk_info.get("title")
     results_filename = "Quirk" + quirk_title + ".wiki"
 
-    # updated with trick from gearRenderer to work with StrictUndefined
     context = quirk_info
     
     if "GITHUB_ACTIONS" in os.environ or "LOCAL_OVERRIDE" in os.environ:
