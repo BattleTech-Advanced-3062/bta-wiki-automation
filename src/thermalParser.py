@@ -59,4 +59,4 @@ def parse_thermalgear_json(file_path, bonuses):
 
 if __name__ == "__main__":
     processed_list = process_thermalgear_files(thermal_dir_list)
-    pp(processed_list)
+    #pp(processed_list)
