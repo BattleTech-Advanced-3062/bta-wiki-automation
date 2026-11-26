@@ -1,7 +1,7 @@
 import os
 import math
 import sys
-import json
+import json5
 import re
 from pprint import pp
 import genUtilities
@@ -37,9 +37,9 @@ def process_ecm_files(directories):
                     #pp(file_path)
 
                     with open(file_path, "r") as f:
-                        data = json.load(f)
+                        data = json5.load(f)
 
-                        if "BLACKLISTED" in data.get("ComponentTags", {}).get("items", []) or "DEPRECATED" in json.dumps(data):
+                        if "BLACKLISTED" in data.get("ComponentTags", {}).get("items", []) or "DEPRECATED" in json5.dumps(data):
                                 continue
                         
                         categories = data.get("Custom", {}).get("Category", [])
@@ -59,7 +59,7 @@ def process_ecm_files(directories):
 
 def parse_ecm_json(file_path, bonuses):
     with open(file_path, 'r') as file:
-        data = json.load(file)
+        data = json5.load(file)
         ecm_name = data.get("Description", {}).get("UIName", "unknown")
         weight = data.get("Tonnage", "None")
         slots = data.get("InventorySize", "None")
@@ -125,9 +125,9 @@ def process_probe_files(directories):
                     #pp(file_path)
 
                     with open(file_path, "r") as f:
-                        data = json.load(f)
+                        data = json5.load(f)
 
-                        if "BLACKLISTED" in data.get("ComponentTags", {}).get("items", []) or "DEPRECATED" in json.dumps(data):
+                        if "BLACKLISTED" in data.get("ComponentTags", {}).get("items", []) or "DEPRECATED" in json5.dumps(data):
                                 continue
                         
                         categories = data.get("Custom", {}).get("Category", [])
@@ -146,7 +146,7 @@ def process_probe_files(directories):
 
 def parse_probe_json(file_path, bonuses):
     with open(file_path, 'r') as file:
-        data = json.load(file)
+        data = json5.load(file)
         probe_name = data.get("Description", {}).get("UIName", "unknown")
         weight = data.get("Tonnage", "None")
         slots = data.get("InventorySize", "None")

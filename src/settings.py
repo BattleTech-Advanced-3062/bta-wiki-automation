@@ -68,6 +68,9 @@ probe_dir_list = ecm_dir_list
 
 quirk_dir_list = [bta_dir + "BT Advanced Mech Quirks/attachment/", bta_dir + "BT Advanced Mech Quirks/jumpjet/", bta_dir + "BT Advanced Mech Quirks/omniquirks/", bta_dir + "BT Advanced Mech Quirks/upgrade/", "BT Advanced Mech Quirks/clanquirks", "BT Advanced Mech Quirks/clanomniquirks", "BT Advanced Mech Quirks/weaponaddon"]
 
+thermal_dir_list = [bta_dir + "BT Advanced Gear/heatsink/"]
+
+
 api_url = "https://www.bta3062.com/api.php"
 
 faction_lookup = {
